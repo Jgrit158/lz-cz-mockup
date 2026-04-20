@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LZ-CZ — Precision Since 1847</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&family=Josefin+Sans:ital,wght@0,100;0,300;0,400;0,600;0,700;1,100;1,300;1,400;1,600;1,700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --bg:      #17110d;
+      --bg2:     #231a13;
+      --bg3:     #2e2218;
+      --gold:    #c9a46e;
+      --goldp:   #e8d4aa;
+      --cream:   #f4ede0;
+      --metal:   #9a9590;
+      --text:    #c8bfb4;
+      --white:   #faf7f2;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 300;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* ── CURSOR — ZAMĚŘOVAČ (RETICLE) ──────────────── */
+    #reticle {
+      position: fixed; z-index: 9999;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      width: 38px; height: 38px;
+      transition: transform .08s linear;
+    }
+    #reticle svg {
+      width: 100%; height: 100%;
+      overflow: visible;
+      transition: transform .35s cubic-bezier(.25,.46,.45,.94), opacity .3s;
+    }
+    /* Outer circle */
+    #ret-outer { stroke: var(--gold); stroke-width: 1; fill: none; opacity: .85; }
+    /* Inner dot */
+    #ret-dot   { fill: var(--gold); opacity: .9; }
+    /* Cross lines */
+    #ret-lines { stroke: var(--gold); stroke-width: .8; opacity: .7; }
+
+    body.hov #reticle svg { transform: scale(1.45); }
+    body.hov #ret-outer   { opacity: 1; stroke: var(--goldp); }
+    body.hov #ret-dot     { opacity: .5; r: 1; }
+    body.hov #ret-lines   { opacity: .9; stroke: var(--goldp); }
+
+    /* ── GRAIN ──────────────────────────────────────── */
+    #grain { position:fixed;inset:0;z-index:9990;pointer-events:none;opacity:.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:180px; }
+
+    /* ── LOADING SCREEN ─────────────────────────────── */
+    #loader {
+      position: fixed; inset: 0; z-index: 10000;
+      background: var(--bg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 24px;
+    }
+    .loader-logo {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 1.3rem; font-weight: 600; letter-spacing: .6em; color: var(--gold);
+      text-transform: uppercase; opacity: 0;
+    }
+    .loader-bar-wrap {
+      width: 200px; height: 1px; background: rgba(201,164,110,.15);
+      position: relative; overflow: hidden;
+    }
+    .loader-bar {
+      position: absolute; left: 0; top: 0;
+      height: 100%; width: 0; background: var(--gold);
+      transition: width 1.8s cubic-bezier(.4,0,.2,1);
+    }
+    .loader-pct {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: .5rem; font-weight: 300; letter-spacing: .5em; color: var(--metal);
+      text-transform: uppercase;
+    }
+
+    /* ── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 28px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    nav::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(23,17,13,.9) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .nav-logo {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 1.1rem; font-weight: 600; letter-spacing: .5em;
+      color: var(--goldp); text-transform: uppercase;
+      position: relative; z-index: 1; text-decoration: none;
+      transition: opacity .3s;
+    }
+    /* Logo image */
+    .nav-logo img {
+      height: 56px; width: auto;
+      transition: transform .5s ease, filter .5s ease;
+      display: block;
+    }
+    .nav-logo:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.2) drop-shadow(0 0 10px rgba(194,165,118,.5));
+    }
+    .nav-links { display: flex; gap: 44px; list-style: none; position: relative; z-index: 1; }
+    .nav-links a {
+      font-family: 'Josefin Sans', sans-serif;
+      color: var(--text); text-decoration: none;
+      font-size: .62rem; font-weight: 300; letter-spacing: .25em;
+      opacity: .75; transition: opacity .3s, color .3s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--goldp); }
+
+    /* ── HERO ────────────────────────────────────────── */
+    #hero {
+      height: 100vh; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    /* VIDEO BACKGROUND */
+    #hero-video {
+      position: absolute; inset: 0; z-index: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      transform: scale(1.08);
+      filter: brightness(.55) saturate(.9);
+    }
+
+    /* Dark vignette over video */
+    .hero-vignette {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(23,17,13,.65) 100%),
+        linear-gradient(to bottom, rgba(23,17,13,.4) 0%, transparent 30%, transparent 60%, rgba(23,17,13,.7) 100%);
+    }
+
+    /* Thin golden horizontal line that sweeps across — cinematic reveal */
+    .hero-scanline {
+      position: absolute; left: 0; right: 0; z-index: 2;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold) 40%, var(--goldp) 50%, var(--gold) 60%, transparent 100%);
+      opacity: 0;
+      top: 50%;
+    }
+
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+    }
+    .hero-eyebrow {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: .62rem; font-weight: 400; letter-spacing: .65em; text-transform: uppercase;
+      color: var(--gold); opacity: 0;
+    }
+    .hero-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(1.8rem, 3.8vw, 4rem);
+      font-weight: 600; line-height: 1.05;
+      color: var(--white); letter-spacing: .1em;
+      text-transform: uppercase; opacity: 0;
+      white-space: nowrap;
+      text-shadow: 0 2px 30px rgba(0,0,0,.5);
+    }
+    .hero-title em { font-style: italic; color: var(--goldp); font-weight: 600; letter-spacing: .1em; }
+    .hero-divider { width: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .hero-sub {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: .68rem; font-weight: 400; letter-spacing: .25em; text-transform: uppercase;
+      color: rgba(200,191,180,.85); opacity: 0; max-width: 420px; line-height: 2.3;
+      -webkit-font-smoothing: antialiased;
+    }
+    .hero-cta {
+      font-family: 'Josefin Sans', sans-serif;
+      margin-top: 12px;
+      display: inline-flex; align-items: center; gap: 18px;
+      color: var(--goldp); text-decoration: none;
+      font-size: .6rem; font-weight: 300; letter-spacing: .35em; text-transform: uppercase;
+      opacity: 0; transition: gap .4s;
+    }
+    .hero-cta:hover { gap: 30px; }
+    .hero-cta .arr { width: 44px; height: 1px; background: var(--gold); position: relative; transition: width .4s; }
+    .hero-cta:hover .arr { width: 64px; }
+    .hero-cta .arr::after { content:''; position:absolute;right:0;top:-3px;width:7px;height:7px;border-right:1px solid var(--gold);border-top:1px solid var(--gold);transform:rotate(45deg); }
+
+    .scroll-ind {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: 0; z-index: 10;
+    }
+    .scroll-ind span { font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.4em; text-transform: uppercase; color: var(--metal); }
+    .scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, var(--gold), transparent); animation: sp 2s ease-in-out infinite; }
+    @keyframes sp { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.25)} }
+
+    /* ── MARQUEE ─────────────────────────────────────── */
+    .mq { padding: 20px 0; background: var(--gold); overflow: hidden; position: relative; z-index: 10; }
+    .mq-track { display: flex; animation: mq 22s linear infinite; white-space: nowrap; }
+    .mq-item { font-family:'Josefin Sans',sans-serif;font-size:.56rem;font-weight:400;letter-spacing:.45em;text-transform:uppercase; color: var(--bg); padding: 0 36px; display:flex;align-items:center;gap:36px; }
+    .mq-item::after { content:'◆'; font-size:.38rem; }
+    @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── SECTION HELPERS ────────────────────────────── */
+    .s-label { font-family:'Josefin Sans',sans-serif;font-size:.56rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:16px; }
+    .s-label::before { content:'';width:28px;height:1px;background:var(--gold); }
+    .s-head { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(2rem,3.8vw,3.2rem);font-weight:700;line-height:1.2;color:var(--white);letter-spacing:.04em;text-transform:uppercase; }
+    .s-head em { font-style:oblique;color:var(--goldp);font-weight:700;letter-spacing:.04em; }
+    .s-body { font-family:'Source Sans 3',sans-serif;font-size:.95rem;line-height:1.95;color:var(--text);opacity:.85;max-width:480px; }
+    .tlink { font-family:'Josefin Sans',sans-serif;display:inline-flex;align-items:center;gap:14px;color:var(--gold);text-decoration:none;font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;transition:gap .3s; }
+    .tlink:hover { gap:22px; }
+    .tlink .arr { width:28px;height:1px;background:var(--gold);position:relative; }
+    .tlink .arr::after { content:'';position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid var(--gold);border-top:1px solid var(--gold);transform:rotate(45deg); }
+
+    /* ── PHILOSOPHY ──────────────────────────────────── */
+    #philosophy { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
+
+    .phil-img {
+      position: relative; overflow: hidden;
+    }
+    .phil-img img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      transform: scale(1.1);
+      will-change: transform;
+      filter: brightness(.8) saturate(.95);
+    }
+    .phil-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(23,17,13,.15), transparent);
+      z-index: 1;
+    }
+    .phil-img-cap {
+      position: absolute; bottom: 36px; right: 36px; z-index: 2;
+      font-size: .5rem; letter-spacing: .3em; color: var(--metal); text-transform: uppercase;
+    }
+
+    .phil-text { padding: 120px 80px; display: flex; flex-direction: column; justify-content: center; gap: 38px; background: var(--bg2); }
+
+    /* ── COLLECTION ──────────────────────────────────── */
+    #collection { background: var(--bg2); }
+    .coll-head { padding: 110px 60px 50px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .coll-title { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(2.2rem,4.5vw,4rem);font-weight:700;color:var(--white);letter-spacing:.04em;text-transform:uppercase; }
+    .coll-count { font-family:'Josefin Sans',sans-serif;font-size:.58rem;font-weight:300;letter-spacing:.32em;color:var(--metal);text-transform:uppercase; }
+
+    .coll-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; padding-bottom: 110px; }
+
+    .coll-item {
+      position: relative; overflow: hidden; aspect-ratio: 3/4; cursor: pointer;
+      background: var(--bg);
+    }
+    .coll-item img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      transition: transform .9s cubic-bezier(.25,.46,.45,.94);
+      filter: brightness(.75) saturate(.9);
+    }
+    .coll-item:hover img { transform: scale(1.07); }
+    .coll-item-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(23,17,13,.95) 0%, transparent 55%);
+      transition: opacity .4s;
+    }
+    .coll-item:hover .coll-item-ov { opacity: .7; }
+    .coll-n { position:absolute;top:28px;right:28px;font-family:'Josefin Sans',sans-serif;font-size:4rem;font-weight:300;color:rgba(201,164,110,.07);line-height:1;pointer-events:none; }
+    .coll-info { position:absolute;bottom:0;left:0;right:0;padding:36px;transform:translateY(6px);transition:transform .5s cubic-bezier(.25,.46,.45,.94); }
+    .coll-item:hover .coll-info { transform:translateY(0); }
+    .ci-model { font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:6px; }
+    .ci-name { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:1.05rem;font-weight:700;color:var(--white);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px; }
+    .ci-desc { font-family:'Source Sans 3',sans-serif;font-size:.85rem;line-height:1.75;color:var(--text);opacity:0;transition:opacity .5s .1s;max-width:280px; }
+    .coll-item:hover .ci-desc { opacity:.85; }
+
+    /* ── HORIZONTAL PANEL SCROLL ─────────────────────── */
+    #h-section { overflow: hidden; position: relative; height: 100vh; }
+    .h-track { display:flex;height:100%;will-change:transform; }
+    .h-panel {
+      min-width: 100vw; height: 100%; flex-shrink: 0;
+      position: relative; overflow: hidden;
+      display: flex; align-items: flex-end; justify-content: flex-start;
+    }
+    .h-panel img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      filter: brightness(.6) saturate(.9);
+    }
+    .h-panel-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(23,17,13,.92) 0%, transparent 50%),
+                  linear-gradient(to right, rgba(23,17,13,.4) 0%, transparent 40%);
+    }
+    .h-info { position:relative;z-index:5;padding:60px 80px;display:flex;flex-direction:column;gap:14px; }
+    .h-tag { font-family:'Josefin Sans',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:var(--gold); }
+    .h-title { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(2.2rem,4.5vw,4.5rem);font-weight:700;color:var(--white);letter-spacing:.03em;line-height:1.1;text-transform:uppercase; }
+    .h-sub { font-family:'Josefin Sans',sans-serif;font-size:.62rem;font-weight:300;letter-spacing:.22em;color:var(--metal);text-transform:uppercase;line-height:2; }
+
+    .h-prog { position:absolute;bottom:44px;right:60px;display:flex;gap:10px;z-index:10; }
+    .h-dot { width:28px;height:1px;background:rgba(201,164,110,.2);transition:background .4s,width .4s; }
+    .h-dot.active { background:var(--gold);width:44px; }
+
+    /* ── DETAIL PANELS ───────────────────────────────── */
+    #detail-panels {}
+    .d-panel { min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden; }
+    .d-panel.rev { }
+
+    .d-img { position:relative;overflow:hidden; }
+    .d-img img {
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center;
+      transform:scale(1.12);
+      will-change:transform;
+      filter:brightness(.78) saturate(.92);
+    }
+    .d-img-cap { position:absolute;bottom:32px;right:32px;font-size:.48rem;letter-spacing:.3em;color:var(--metal);text-transform:uppercase;z-index:2; }
+
+    .d-text { padding:100px 80px;display:flex;flex-direction:column;justify-content:center;gap:34px; }
+    .d-text.dark { background:var(--bg2); }
+    .d-text.darker { background:var(--bg3); }
+
+    .d-detail-label { font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:var(--metal);display:flex;align-items:center;gap:12px; }
+    .d-detail-label::before { content:'';width:18px;height:1px;background:var(--metal); }
+    .d-head { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:700;color:var(--white);line-height:1.25;letter-spacing:.03em;text-transform:uppercase; }
+    .d-head em { font-style:oblique;color:var(--goldp);font-weight:700;letter-spacing:.03em; }
+    .d-body { font-family:'Source Sans 3',sans-serif;font-size:.95rem;line-height:1.95;color:var(--text);opacity:.85;max-width:440px; }
+
+    .spec-list { list-style:none;display:flex;flex-direction:column;gap:0; }
+    .spec-list li { display:flex;justify-content:space-between;align-items:center;font-family:'Josefin Sans',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.12em;padding:14px 0;border-bottom:1px solid rgba(201,164,110,.1); }
+    .sk { color:var(--metal);text-transform:uppercase;letter-spacing:.28em; }
+    .sv { color:var(--goldp);letter-spacing:.08em; }
+
+    /* ── FULL-BLEED IMAGE BREAK ──────────────────────── */
+    .img-break {
+      height: 70vh; position: relative; overflow: hidden;
+    }
+    .img-break img {
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center;
+      transform:scale(1.1);
+      will-change:transform;
+      filter:brightness(.65) saturate(.85);
+    }
+    .img-break-text {
+      position:absolute;z-index:5;bottom:60px;left:60px;
+      font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      font-size:clamp(1.8rem,4vw,3.5rem);font-weight:700;
+      color:var(--white);letter-spacing:.03em;font-style:oblique;text-transform:uppercase;
+      text-shadow:0 4px 30px rgba(0,0,0,.5);
+    }
+
+    /* ── STATS ───────────────────────────────────────── */
+    #stats { padding:0; display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--bg2); }
+    .stat { padding:70px 40px;background:var(--bg);display:flex;flex-direction:column;gap:14px;border-bottom:2px solid transparent;transition:border-color .4s; }
+    .stat:hover { border-color:var(--gold); }
+    .stat-n { font-family:'Josefin Sans',sans-serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:300;color:var(--goldp);line-height:1; }
+    .stat-l { font-family:'Josefin Sans',sans-serif;font-size:.55rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--metal);line-height:1.9; }
+
+    /* ── TESTIMONIAL ─────────────────────────────────── */
+    #testimonial { min-height:60vh;display:flex;align-items:center;justify-content:center;padding:120px 60px;position:relative;overflow:hidden; }
+    .t-bg { position:absolute;inset:0; }
+    .t-bg img { width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.25) saturate(.5);transform:scale(1.05); }
+    .t-bg-grad { position:absolute;inset:0;background:rgba(23,17,13,.55); }
+    .t-content { position:relative;z-index:2;max-width:820px;text-align:center;display:flex;flex-direction:column;gap:34px;align-items:center; }
+    .t-q { font-family:'Josefin Sans',sans-serif;font-size:5rem;color:var(--gold);opacity:.3;line-height:.55;font-weight:300; }
+    .t-text { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(1.2rem,2.5vw,1.9rem);font-weight:700;font-style:oblique;color:var(--white);line-height:1.7;letter-spacing:.02em; }
+    .t-author { font-family:'Josefin Sans',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:18px; }
+    .t-author::before,.t-author::after { content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold)); }
+    .t-author::after { transform:scaleX(-1); }
+
+    /* ── CONTACT ─────────────────────────────────────── */
+    #contact {
+      position: relative;
+      padding: 140px 60px 80px;
+      overflow: hidden;
+    }
+    #contact-video {
+      position: absolute; inset: 0; z-index: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      filter: brightness(.28) saturate(.6);
+    }
+    .contact-gradient {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(to bottom, rgba(23,17,13,.75) 0%, rgba(23,17,13,.55) 50%, rgba(23,17,13,.85) 100%),
+        linear-gradient(to right, rgba(23,17,13,.5) 0%, transparent 60%);
+    }
+    #contact .contact-inner { position: relative; z-index: 2; }
+    .contact-inner { max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px; }
+    .c-left { display:flex;flex-direction:column;gap:40px; }
+    .c-head { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(2.2rem,3.8vw,3.4rem);font-weight:700;color:var(--white);line-height:1.2;letter-spacing:.03em;text-transform:uppercase; }
+    .c-head em { font-style:oblique;color:var(--goldp);font-weight:700;letter-spacing:.03em; }
+    .c-info { display:flex;flex-direction:column;gap:20px; }
+    .c-info-row { display:flex;gap:20px;align-items:flex-start; }
+    .c-info-label { font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);min-width:80px;margin-top:2px; }
+    .c-info-val { font-family:'Source Sans 3',sans-serif;font-size:.9rem;color:var(--text);line-height:1.75; }
+
+    .c-form { display:flex;flex-direction:column;gap:22px; }
+    .fg { position:relative; }
+    .fi,.ft { width:100%;background:transparent;border:none;border-bottom:1px solid rgba(201,164,110,.2);color:var(--white);font-family:'Josefin Sans',sans-serif;font-size:.68rem;font-weight:300;letter-spacing:.15em;padding:14px 0;outline:none;transition:border-color .3s; }
+    .fi:focus,.ft:focus { border-color:var(--gold); }
+    .fi::placeholder,.ft::placeholder { color:var(--metal);font-size:.6rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase; }
+    .ft { resize:none;height:100px; }
+    .fl { position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .4s; }
+    .fi:focus~.fl,.ft:focus~.fl { width:100%; }
+    .sbtn { align-self:flex-start;margin-top:16px;background:transparent;border:1px solid var(--gold);color:var(--goldp);font-family:'Josefin Sans',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.4em;text-transform:uppercase;padding:16px 44px;cursor:none;position:relative;overflow:hidden;transition:color .4s; }
+    .sbtn::before { content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-101%);transition:transform .4s cubic-bezier(.25,.46,.45,.94); }
+    .sbtn:hover::before { transform:translateX(0); }
+    .sbtn:hover { color:var(--bg); }
+    .sbtn span { position:relative;z-index:1; }
+
+    footer { position:relative;overflow:hidden;padding:36px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,164,110,.15); }
+    footer .f-video { position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:brightness(.12) saturate(.4); }
+    footer .f-overlay { position:absolute;inset:0;z-index:1;background:rgba(23,17,13,.7); }
+    footer .f-logo, footer .f-links, footer .f-copy { position:relative;z-index:2; }
+    .f-logo { font-family:'Josefin Sans',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.55em;color:var(--gold);text-transform:uppercase; }
+    .f-copy { font-family:'Josefin Sans',sans-serif;font-size:.48rem;font-weight:300;letter-spacing:.2em;color:var(--metal);text-transform:uppercase; }
+    .f-links { display:flex;gap:28px; }
+    .f-links a { font-family:'Josefin Sans',sans-serif;color:var(--metal);text-decoration:none;font-size:.5rem;font-weight:300;letter-spacing:.25em;text-transform:uppercase;transition:color .3s; }
+    .f-links a:hover { color:var(--gold); }
+
+    /* ── REVEAL HELPERS ──────────────────────────────── */
+    .rl { overflow:hidden; }
+    .rl-i { transform:translateY(110%);display:block; }
+
+    /* ── RESPONSIVE ──────────────────────────────────── */
+    @media(max-width:900px){
+      nav{padding:20px 24px;} .nav-links{display:none;}
+      #philosophy,.d-panel,.contact-inner{grid-template-columns:1fr;}
+      .phil-img,.d-img{min-height:50vh;}
+      .coll-grid{grid-template-columns:1fr;}
+      #stats{grid-template-columns:repeat(2,1fr);}
+      footer{flex-direction:column;gap:16px;text-align:center;}
+      .h-info{padding:40px 30px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- RETICLE CURSOR -->
+<div id="reticle">
+  <svg viewBox="-19 -19 38 38" xmlns="http://www.w3.org/2000/svg">
+    <!-- outer ring -->
+    <circle id="ret-outer" cx="0" cy="0" r="14" />
+    <!-- cross lines — gaps in the center for classic reticle look -->
+    <g id="ret-lines">
+      <line x1="-18" y1="0" x2="-16" y2="0" />
+      <line x1="16"  y1="0" x2="18"  y2="0" />
+      <line x1="0" y1="-18" x2="0" y2="-16" />
+      <line x1="0" y1="16"  x2="0" y2="18"  />
+      <!-- inner short ticks at ring edge -->
+      <line x1="-14" y1="0" x2="-8"  y2="0" />
+      <line x1="8"   y1="0" x2="14"  y2="0" />
+      <line x1="0" y1="-14" x2="0" y2="-8"  />
+      <line x1="0" y1="8"   x2="0" y2="14"  />
+    </g>
+    <!-- center dot -->
+    <circle id="ret-dot" cx="0" cy="0" r="1.4" />
+  </svg>
+</div>
+<div id="grain"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo" id="ll">LZ-CZ</div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="lb"></div></div>
+  <div class="loader-pct" id="lp">0%</div>
+</div>
+
+<!-- NAV -->
+<nav id="main-nav" style="opacity:0">
+  <a class="nav-logo" href="#"><img src="assets/logo.svg" alt="LZ-CZ" /></a>
+  <ul class="nav-links">
+    <li><a href="#philosophy">FILOSOFIE</a></li>
+    <li><a href="#collection">KOLEKCE</a></li>
+    <li><a href="#detail-panels">ŘEMESLO</a></li>
+    <li><a href="#contact">KONTAKT</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════ -->
+<section id="hero">
+  <video id="hero-video" autoplay muted loop playsinline preload="auto">
+    <source src="assets/hero.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-vignette"></div>
+  <div class="hero-scanline" id="scanline"></div>
+
+  <div class="hero-content" id="hero-content">
+    <p class="hero-eyebrow">LZ-CZ · Dýšina, Česká republika · Est. 2021</p>
+    <h1 class="hero-title">Mistrovské dílo <em>v rukou lovce</em></h1>
+    <div class="hero-divider" id="hero-divider"></div>
+    <p class="hero-sub">Luxusní lovecké zbraně ručně vyráběné<br />tradičními metodami po generace</p>
+  </div>
+
+  <div class="scroll-ind" id="scroll-ind">
+    <span>Prozkoumat</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mq-track">
+    <div class="mq-item">Ručně gravírováno</div><div class="mq-item">Ořechové dřevo</div>
+    <div class="mq-item">Česká preciznost</div><div class="mq-item">Dýšina · Est. 2021</div>
+    <div class="mq-item">Czech Craftsmanship</div><div class="mq-item">Zbraně na míru</div>
+    <div class="mq-item">Ručně gravírováno</div><div class="mq-item">Ořechové dřevo</div>
+    <div class="mq-item">Česká preciznost</div><div class="mq-item">Dýšina · Est. 2021</div>
+    <div class="mq-item">Czech Craftsmanship</div><div class="mq-item">Zbraně na míru</div>
+  </div>
+</div>
+
+<!-- ══ PHILOSOPHY ════════════════════════════════════ -->
+<section id="philosophy">
+  <div class="phil-img" id="phil-img">
+    <img src="assets/frame_06.jpg" alt="Detail gravury a zaměřovače" id="phil-img-el" />
+    <div class="phil-img-overlay"></div>
+    <span class="phil-img-cap">Detail · LZ-CZ · Dýšina</span>
+  </div>
+  <div class="phil-text">
+    <span class="s-label">O nás</span>
+    <h2 class="s-head">LZ-CZ: Mistrovství<br /><em>ze srdce Dýšiny</em></h2>
+    <p class="s-body">V malebné západočeské vsi Dýšina, obklopené hlubokými lesy, které po staletí psaly historii českého lovectví, vzniká něco výjimečného. Značka LZ-CZ zde s hrdostí pokračuje v proslulé tradici české zbrojařské výroby. Každá naše puška je příběhem o nekompromisní kvalitě, trpělivosti a vášni pro detail.</p>
+    <p class="s-body">Věříme, že špičková zbraň vyžaduje soulad dvou světů — chirurgické přesnosti moderních strojů a citu lidské ruky. Ruční dopasování, precizní gravírování a finální úprava výběrového ořechového dřeva dávají každé zbrani nezaměnitelný charakter.</p>
+    <p class="s-body" style="color:var(--gold);opacity:.9;font-style:italic">LZ-CZ – Preciznost ze západu Čech. Navrženo pro okamžik, na kterém záleží.</p>
+    <a href="#collection" class="tlink">Naše kolekce <span class="arr"></span></a>
+  </div>
+</section>
+
+<!-- ══ COLLECTION ════════════════════════════════════ -->
+<section id="collection">
+  <div class="coll-head">
+    <h2 class="coll-title">Naše<br /><em style="font-style:oblique;color:var(--goldp);font-weight:700;letter-spacing:.03em">Kolekce</em></h2>
+    <span class="coll-count">3 řady / 12 modelů</span>
+  </div>
+  <div class="coll-grid">
+    <div class="coll-item">
+      <img src="assets/frame_01.jpg" alt="LZ-CZ Imperial — plná puška" />
+      <div class="coll-item-ov"></div>
+      <span class="coll-n">01</span>
+      <div class="coll-info">
+        <p class="ci-model">Model Imperial</p>
+        <h3 class="ci-name">Karabina s dalekohledem</h3>
+        <p class="ci-desc">Sportovní karabina s prémiovým optickým zaměřovačem Swarovski Z8i, vyřezávanou lůžkovou deskou a ořechovým pažbením.</p>
+      </div>
+    </div>
+    <div class="coll-item">
+      <img src="assets/frame_04.jpg" alt="LZ-CZ Imperial — detail závěru" style="object-position:60% center;" />
+      <div class="coll-item-ov"></div>
+      <span class="coll-n">02</span>
+      <div class="coll-info">
+        <p class="ci-model">Model Heritage</p>
+        <h3 class="ci-name">Arabeskový závěr</h3>
+        <p class="ci-desc">Závodně fémovaná lůžková deska s ručně rytou arabeskou — každý kus je jedinečný výtvor mistra gravéra.</p>
+      </div>
+    </div>
+    <div class="coll-item">
+      <img src="assets/frame_05.jpg" alt="LZ-CZ Imperial — gravura a zaměřovač" />
+      <div class="coll-item-ov"></div>
+      <span class="coll-n">03</span>
+      <div class="coll-info">
+        <p class="ci-model">Model Exclusive</p>
+        <h3 class="ci-name">Limitovaná edice</h3>
+        <p class="ci-desc">Pouze 12 kusů ročně — každá puška nese sériové číslo a certifikát pravosti podepsaný hlavním mistrem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HORIZONTAL SCROLL ════════════════════════════ -->
+<section id="h-section">
+  <div class="h-track" id="h-track">
+    <div class="h-panel">
+      <img src="assets/frame_01.jpg" alt="Plný záběr" />
+      <div class="h-panel-grad"></div>
+      <div class="h-info">
+        <span class="h-tag">Imperial Series — Celkový pohled</span>
+        <h2 class="h-title">LZ-CZ Imperial</h2>
+        <p class="h-sub">Lovecká karabina · Kalibr .30-06 · Swarovski Z8i</p>
+      </div>
+    </div>
+    <div class="h-panel">
+      <img src="assets/frame_03.jpg" alt="Střední záběr" />
+      <div class="h-panel-grad"></div>
+      <div class="h-info">
+        <span class="h-tag">Imperial Series — Profil</span>
+        <h2 class="h-title">Ořechové pažbení</h2>
+        <p class="h-sub">Čerešňový ořech · Ruční profilování · 80+ hod.</p>
+      </div>
+    </div>
+    <div class="h-panel">
+      <img src="assets/frame_04.jpg" alt="Detail závěru" />
+      <div class="h-panel-grad"></div>
+      <div class="h-info">
+        <span class="h-tag">Imperial Series — Mechanismus</span>
+        <h2 class="h-title">Závodní závěr</h2>
+        <p class="h-sub">Chromová ocel · Nastavitelná spoušť · Brunýrování</p>
+      </div>
+    </div>
+    <div class="h-panel">
+      <img src="assets/frame_06.jpg" alt="Extrémní detail" />
+      <div class="h-panel-grad"></div>
+      <div class="h-info">
+        <span class="h-tag">Imperial Series — Arabeska</span>
+        <h2 class="h-title">Ručně rytá gravura</h2>
+        <p class="h-sub">Mistrovská arabeska · 120 hodin práce · Unikátní vzor</p>
+      </div>
+    </div>
+  </div>
+  <div class="h-prog" id="h-prog">
+    <div class="h-dot active"></div>
+    <div class="h-dot"></div>
+    <div class="h-dot"></div>
+    <div class="h-dot"></div>
+  </div>
+</section>
+
+<!-- ══ DETAIL PANELS ═════════════════════════════════ -->
+<section id="detail-panels">
+
+  <div class="d-panel">
+    <div class="d-img" id="d1">
+      <img src="assets/frame_05.jpg" alt="Zaměřovač Swarovski" data-par />
+      <span class="d-img-cap">Detail · Optika Swarovski Z8i</span>
+    </div>
+    <div class="d-text dark">
+      <span class="d-detail-label">Detail 01</span>
+      <h3 class="d-head rl"><span class="rl-i">Optika <em>Swarovski</em></span></h3>
+      <p class="d-body">Každá Imperial karabina je standardně vybavena optickým zaměřovačem Swarovski Z8i, montovaným na přesnou základnu z modifikované chromové oceli. Průzor 56mm zajišťuje výjimečný příjem světla za soumraku.</p>
+      <ul class="spec-list">
+        <li><span class="sk">Zvětšení</span><span class="sv">2–16 × 56</span></li>
+        <li><span class="sk">Montáž</span><span class="sv">Závodní pivot EAW</span></li>
+        <li><span class="sk">Povlak optiky</span><span class="sv">SWAROLIGHT anti-reflex</span></li>
+        <li><span class="sk">Osvětlení</span><span class="sv">Červený záměrný bod</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="d-panel" style="direction:rtl">
+    <div class="d-img" id="d2" style="direction:ltr">
+      <img src="assets/frame_04.jpg" alt="Závěr a gravura" data-par />
+      <span class="d-img-cap">Detail · Závodní závěr</span>
+    </div>
+    <div class="d-text darker" style="direction:ltr">
+      <span class="d-detail-label">Detail 02</span>
+      <h3 class="d-head rl"><span class="rl-i"><em>Arabeskový</em> závěr</span></h3>
+      <p class="d-body">Lůžková deska z kalené oceli je ručně rytá arabeskou — stylizovanými úponky a florálními motivy v tradici bavorského zbrojařství. Každý kus vyžaduje 80–120 hodin práce hlavního gravéra.</p>
+      <ul class="spec-list">
+        <li><span class="sk">Materiál</span><span class="sv">Chromová ocel 42CrMo4</span></li>
+        <li><span class="sk">Gravura</span><span class="sv">Ručně, 80–120 hod.</span></li>
+        <li><span class="sk">Povrch</span><span class="sv">Brunýrování / Nikl</span></li>
+        <li><span class="sk">Spoušť</span><span class="sv">Set-trigger, nastavitelný</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="d-panel">
+    <div class="d-img" id="d3">
+      <img src="assets/frame_06.jpg" alt="Extrémní detail optiky a pažby" data-par />
+      <span class="d-img-cap">Detail · Ořechová pažba</span>
+    </div>
+    <div class="d-text dark">
+      <span class="d-detail-label">Detail 03</span>
+      <h3 class="d-head rl"><span class="rl-i">Ořechové <em>pažbení</em></span></h3>
+      <p class="d-body">Pažba je vyrobena z vybraných kusů čerešňového ořechu s výraznou kresbou letokruhů. Každý kus prochází šestiměsíčním sušením a ručním tvarováním, aby přesně přilnul k závěru a zajistil optimální ergonomii.</p>
+      <ul class="spec-list">
+        <li><span class="sk">Dřevo</span><span class="sv">Čerešňový ořech, AA+</span></li>
+        <li><span class="sk">Sušení</span><span class="sv">6 měsíců přirozené</span></li>
+        <li><span class="sk">Povrchová úprava</span><span class="sv">Olejový nátěr, 8 vrstev</span></li>
+        <li><span class="sk">Profilování</span><span class="sv">Ručně, 40+ hod.</span></li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- FULL BLEED IMAGE BREAK -->
+<div class="img-break" id="img-break">
+  <img src="assets/frame_02.jpg" alt="LZ-CZ Imperial — studio" data-par-break />
+  <div style="position:absolute;inset:0;background:rgba(23,17,13,.35)"></div>
+  <div class="img-break-text">"Preciznost není náhoda."</div>
+</div>
+
+<!-- ══ STATS ═════════════════════════════════════════ -->
+<section id="stats">
+  <div class="stat">
+    <span class="stat-n" data-target="177">0</span>
+    <span class="stat-l">Let tradice<br/>bavorského řemesla</span>
+  </div>
+  <div class="stat">
+    <span class="stat-n" data-target="12">0</span>
+    <span class="stat-l">Mistrovských<br/>zbrojířů v ateliéru</span>
+  </div>
+  <div class="stat">
+    <span class="stat-n" data-target="4800">0</span>
+    <span class="stat-l">Hodin práce<br/>na každé pušce</span>
+  </div>
+  <div class="stat">
+    <span class="stat-n" data-target="38">0</span>
+    <span class="stat-l">Zemí, kam dodáváme<br/>naše zbraně</span>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIAL ═══════════════════════════════════ -->
+<section id="testimonial">
+  <div class="t-bg">
+    <img src="assets/frame_03.jpg" alt="bg" />
+    <div class="t-bg-grad"></div>
+  </div>
+  <div class="t-content">
+    <div class="t-q">"</div>
+    <p class="t-text">LZ-CZ nezhotovuje zbraně. LZ-CZ vytváří dědictví — předměty, které nesou příběh svého majitele do dalších generací.</p>
+    <span class="t-author">Graf von Schönburg-Waldenburg · Bavorsko, 2024</span>
+  </div>
+</section>
+
+<!-- ══ CONTACT ════════════════════════════════════════ -->
+<section id="contact">
+  <video id="contact-video" autoplay muted loop playsinline>
+    <source src="assets/footer-bg.mp4" type="video/mp4" />
+  </video>
+  <div class="contact-gradient"></div>
+  <div class="contact-inner">
+    <div class="c-left">
+      <span class="s-label">Kontakt</span>
+      <h2 class="c-head">Začněme<br /><em>váš příběh</em></h2>
+      <p style="font-size:.75rem;line-height:2;color:var(--text);opacity:.82;max-width:400px">Každá zakázka začíná osobním setkáním. Ozvěte se nám a domluvme konzultaci v naší dílně v Dýšině.</p>
+      <div class="c-info">
+        <div class="c-info-row"><span class="c-info-label">Společnost</span><span class="c-info-val">CREDITIMMO s.r.o.<br/>Břasy 237, 338 24</span></div>
+        <div class="c-info-row"><span class="c-info-label">IČO / DIČ</span><span class="c-info-val">03669947 / 03669947</span></div>
+        <div class="c-info-row"><span class="c-info-label">E-mail</span><span class="c-info-val">info@lzcz.cz</span></div>
+      </div>
+    </div>
+    <form class="c-form" onsubmit="return false;">
+      <div class="fg"><input type="text" class="fi" placeholder="Vaše jméno" /><div class="fl"></div></div>
+      <div class="fg"><input type="email" class="fi" placeholder="E-mailová adresa" /><div class="fl"></div></div>
+      <div class="fg"><input type="text" class="fi" placeholder="Předmět poptávky" /><div class="fl"></div></div>
+      <div class="fg"><textarea class="ft" placeholder="Vaše zpráva"></textarea><div class="fl"></div></div>
+      <button class="sbtn" type="submit"><span>Odeslat poptávku</span></button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <video class="f-video" autoplay muted loop playsinline>
+    <source src="assets/footer-bg.mp4" type="video/mp4" />
+  </video>
+  <div class="f-overlay"></div>
+  <div class="f-logo"><img src="assets/logo.svg" alt="LZ-CZ" style="height:64px;width:auto;opacity:.9;" /></div>
+  <div class="f-links">
+    <a href="#">KOLEKCE</a><a href="#">FILOSOFIE</a><a href="#">ŘEMESLO</a><a href="#">KONTAKT</a>
+  </div>
+  <span class="f-copy">© 2024 CREDITIMMO s.r.o. · LZ-CZ · Všechna práva vyhrazena</span>
+</footer>
+
+
+<script>
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+/* ── RETICLE CURSOR ──────────────────────────────── */
+const reticle = document.getElementById('reticle');
+let mx=0, my=0, rx=0, ry=0;
+
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+// Fast snap for the reticle (no lag — like a real scope)
+(function ra() {
+  rx += (mx - rx) * 0.18;
+  ry += (my - ry) * 0.18;
+  reticle.style.left = rx + 'px';
+  reticle.style.top  = ry + 'px';
+  requestAnimationFrame(ra);
+})();
+
+document.querySelectorAll('a,button,.coll-item,.stat,.h-panel').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('hov'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
+});
+
+/* ── LOADER ──────────────────────────────────────── */
+const ll=document.getElementById('ll');
+const lb=document.getElementById('lb');
+const lp=document.getElementById('lp');
+
+gsap.to(ll,{opacity:1,duration:.8,ease:'power2.out'});
+// Animate loading bar
+let pct=0;
+const loadInt=setInterval(()=>{
+  pct=Math.min(pct+(Math.random()*6+2),95);
+  lb.style.width=pct+'%';
+  lp.textContent=Math.round(pct)+'%';
+},80);
+
+function finishLoader(){
+  clearInterval(loadInt);
+  lb.style.transition='width .3s';
+  lb.style.width='100%';
+  lp.textContent='100%';
+  setTimeout(()=>{
+    gsap.to('#loader',{
+      opacity:0,duration:.9,ease:'power2.inOut',
+      onComplete:()=>{document.getElementById('loader').style.display='none';}
+    });
+    gsap.to('#main-nav',{opacity:1,duration:.8,delay:.2});
+    startHero();
+  },400);
+}
+
+// Wait for video to be ready OR 2.5s max
+const vid=document.getElementById('hero-video');
+vid.addEventListener('canplaythrough',finishLoader,{once:true});
+setTimeout(finishLoader,2500);
+
+/* ── HERO ENTRANCE ───────────────────────────────── */
+function startHero(){
+  // Cinematic scanline sweep
+  const sl=document.getElementById('scanline');
+  gsap.set(sl,{top:'50%',opacity:0});
+  const htl=gsap.timeline({delay:.1});
+  htl
+    .to(sl,{opacity:.9,duration:.15,ease:'power4.in'})
+    .to(sl,{top:'-2%',duration:1.2,ease:'power3.inOut'},'-=.1')
+    .to(sl,{opacity:0,duration:.2},'-=.25')
+
+    .fromTo('#hero-video',{scale:1.15,filter:'brightness(.3) saturate(.4)'},{scale:1.08,filter:'brightness(.55) saturate(.9)',duration:1.8,ease:'power2.out'},'<')
+
+    .to('.hero-eyebrow',{opacity:1,y:0,duration:.9,ease:'power3.out'},'-=.8')
+    .fromTo('.hero-title',{opacity:0,y:40},{opacity:1,y:0,duration:1.2,ease:'power3.out'},'-=.5')
+    .to('#hero-divider',{width:180,duration:1.1,ease:'power3.inOut'},'-=.7')
+    .fromTo('.hero-sub',{opacity:0,y:18},{opacity:1,y:0,duration:.9,ease:'power3.out'},'-=.6')
+    .fromTo('.hero-cta',{opacity:0,y:12},{opacity:1,y:0,duration:.8,ease:'power3.out'},'-=.4')
+    .to('#scroll-ind',{opacity:1,duration:.8},'-=.2');
+}
+
+/* ── HERO PARALLAX + VIDEO SLOW ZOOM ON SCROLL ───── */
+ScrollTrigger.create({
+  trigger:'#hero',start:'top top',end:'bottom top',scrub:true,
+  onUpdate:self=>{
+    const p=self.progress;
+    gsap.set('#hero-video',{filter:`brightness(${.55-p*.25}) saturate(${.9-p*.3})`,scale:1.08+p*.08});
+    gsap.set('.hero-content',{y:p*80,opacity:1-p*1.2});
+  }
+});
+
+/* ── PHILOSOPHY IMG PARALLAX ─────────────────────── */
+gsap.to('#phil-img-el',{
+  yPercent:12, ease:'none',
+  scrollTrigger:{trigger:'#philosophy',start:'top bottom',end:'bottom top',scrub:1}
+});
+
+/* ── SECTION REVEALS ─────────────────────────────── */
+gsap.utils.toArray('.s-label,.d-detail-label').forEach(el=>{
+  gsap.from(el,{opacity:0,x:-20,duration:.8,ease:'power2.out',
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}});
+});
+gsap.utils.toArray('.s-head,.c-head,.coll-title,.d-head').forEach(el=>{
+  gsap.from(el,{opacity:0,y:28,duration:1,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}});
+});
+gsap.utils.toArray('.rl-i').forEach(el=>{
+  gsap.to(el,{y:0,duration:1.1,ease:'power4.out',
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}});
+});
+gsap.utils.toArray('.s-body,.d-body,.t-text').forEach((el,i)=>{
+  gsap.from(el,{opacity:0,y:18,duration:.9,delay:i*.04,ease:'power2.out',
+    scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none none'}});
+});
+gsap.utils.toArray('.coll-item').forEach((el,i)=>{
+  gsap.from(el,{opacity:0,y:50,duration:1.1,delay:i*.12,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}});
+});
+gsap.utils.toArray('.spec-list').forEach(list=>{
+  gsap.from(list.querySelectorAll('li'),{opacity:0,x:18,duration:.7,stagger:.09,ease:'power2.out',
+    scrollTrigger:{trigger:list,start:'top 88%',toggleActions:'play none none none'}});
+});
+gsap.utils.toArray('.stat').forEach((el,i)=>{
+  gsap.from(el,{opacity:0,y:32,duration:.9,delay:i*.1,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}});
+});
+
+/* ── DETAIL IMAGE PARALLAX ───────────────────────── */
+document.querySelectorAll('[data-par]').forEach(img=>{
+  gsap.to(img,{
+    yPercent:-12,ease:'none',
+    scrollTrigger:{trigger:img.parentElement,start:'top bottom',end:'bottom top',scrub:1}
+  });
+});
+document.querySelectorAll('[data-par-break]').forEach(img=>{
+  gsap.to(img,{
+    yPercent:-10,ease:'none',
+    scrollTrigger:{trigger:img.parentElement,start:'top bottom',end:'bottom top',scrub:1}
+  });
+});
+
+/* ── HORIZONTAL SCROLL ───────────────────────────── */
+const ht=document.getElementById('h-track');
+const hps=ht.querySelectorAll('.h-panel');
+const dots=document.querySelectorAll('.h-dot');
+const tw=()=>(hps.length-1)*window.innerWidth;
+
+gsap.to(ht,{
+  x:()=>-tw(),ease:'none',
+  scrollTrigger:{
+    trigger:'#h-section',start:'top top',end:()=>'+=' +tw(),
+    scrub:1,pin:true,anticipatePin:1,
+    onUpdate:s=>{
+      const idx=Math.round(s.progress*(hps.length-1));
+      dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    }
+  }
+});
+
+/* ── STATS COUNTER ───────────────────────────────── */
+document.querySelectorAll('.stat-n').forEach(el=>{
+  const target=+el.dataset.target;
+  ScrollTrigger.create({
+    trigger:el,start:'top 85%',
+    onEnter:()=>gsap.to({v:0},{
+      v:target,duration:2.2,ease:'power3.out',
+      onUpdate:function(){el.textContent=Math.round(this.targets()[0].v).toLocaleString('cs-CZ');}
+    })
+  });
+});
+
+/* ── TESTIMONIAL ─────────────────────────────────── */
+gsap.from('.t-q',{opacity:0,scale:.8,duration:1,
+  scrollTrigger:{trigger:'#testimonial',start:'top 80%',toggleActions:'play none none none'}});
+gsap.from('.t-author',{opacity:0,y:16,duration:.9,delay:.3,
+  scrollTrigger:{trigger:'#testimonial',start:'top 80%',toggleActions:'play none none none'}});
+
+/* ── SMOOTH NAV SCROLL ───────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) gsap.to(window,{duration:1.4,scrollTo:t,ease:'power3.inOut'});
+  });
+});
+</script>
+</body>
+</html>
