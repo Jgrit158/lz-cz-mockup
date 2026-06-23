@@ -349,6 +349,21 @@
     .sk { color:var(--metal);text-transform:uppercase;letter-spacing:.28em; }
     .sv { color:var(--goldp);letter-spacing:.08em; }
 
+    /* ── MODEL FEATURE BLOCKS (Optika / Dřevo) ───────── */
+    .d-feature { display:flex;flex-direction:column;gap:10px;padding-top:6px; }
+    .d-feature-label {
+      font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;
+      letter-spacing:.45em;text-transform:uppercase;color:var(--gold);
+      display:flex;align-items:center;gap:12px;
+    }
+    .d-feature-label::before { content:'';width:18px;height:1px;background:var(--gold); }
+    .d-feature-text { font-family:'Source Sans 3',sans-serif;font-size:.92rem;line-height:1.9;color:var(--text);opacity:.85;max-width:440px; }
+    .d-feature-spec {
+      font-family:'Josefin Sans',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.14em;
+      color:var(--goldp);margin-top:2px;
+    }
+    .d-feature-spec .sk { color:var(--metal);letter-spacing:.28em;margin-right:10px; }
+
     /* ── MODEL GALLERY (foto pohledy) ────────────────── */
     .m-gallery { display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bg); }
     .m-shot { position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--bg3); }
@@ -616,6 +631,15 @@
         <li><span class="sk">Váha</span><span class="sv">2,73 kg</span></li>
         <li><span class="sk">Povrch</span><span class="sv">DLC</span></li>
       </ul>
+      <div class="d-feature">
+        <span class="d-feature-label">Optika</span>
+        <p class="d-feature-text">Standardně osazujeme optiku Swarovski, doplněnou o vlastní unikátní systém montáže LZ-CZ s možností rychlé a opakovatelné výměny bez ztráty nástřelu. Systém je navržen s důrazem na pevnost, přesnost a dlouhodobou spolehlivost. Na přání zákazníka je možné zbraň osadit i jakoukoli jinou optikou dle individuálních preferencí.</p>
+        <span class="d-feature-spec"><span class="sk">Specifikace</span>Swarovski Z3 3-9×36</span>
+      </div>
+      <div class="d-feature">
+        <span class="d-feature-label">Dřevo</span>
+        <p class="d-feature-text">Pažby z výběrového ořechového dřeva spojují tradiční řemeslo s moderní přesností výroby. Každý kus je strojně přesně opracovaný a následně ručně lícovaný tak, aby celek působil dokonale harmonicky a poskytoval jistotu v každém detailu. Povrch chrání speciální odolný vrstvený nátěr, který zvýrazňuje přirozenou kresbu dřeva a zároveň zvyšuje jeho odolnost při dlouhodobém používání. Na přání lze zvolit hedvábně matný nebo lesklý finiš podle osobního vkusu i charakteru zbraně.</p>
+      </div>
     </div>
   </div>
 
@@ -651,6 +675,15 @@
         <li><span class="sk">Váha</span><span class="sv">doplníme</span></li>
         <li><span class="sk">Povrch</span><span class="sv">DLC</span></li>
       </ul>
+      <div class="d-feature">
+        <span class="d-feature-label">Optika</span>
+        <p class="d-feature-text">Standardně osazujeme optiku Swarovski, doplněnou o vlastní unikátní systém montáže LZ-CZ s možností rychlé a opakovatelné výměny bez ztráty nástřelu. Systém je navržen s důrazem na pevnost, přesnost a dlouhodobou spolehlivost. Na přání zákazníka je možné zbraň osadit i jakoukoli jinou optikou dle individuálních preferencí.</p>
+        <span class="d-feature-spec"><span class="sk">Specifikace</span>Swarovski Z3 3-9×36</span>
+      </div>
+      <div class="d-feature">
+        <span class="d-feature-label">Dřevo</span>
+        <p class="d-feature-text">Pažby z výběrového ořechového dřeva spojují tradiční řemeslo s moderní přesností výroby. Každý kus je strojně přesně opracovaný a následně ručně lícovaný tak, aby celek působil dokonale harmonicky a poskytoval jistotu v každém detailu. Povrch chrání speciální odolný vrstvený nátěr, který zvýrazňuje přirozenou kresbu dřeva a zároveň zvyšuje jeho odolnost při dlouhodobém používání. Na přání lze zvolit hedvábně matný nebo lesklý finiš podle osobního vkusu i charakteru zbraně.</p>
+      </div>
     </div>
   </div>
 
