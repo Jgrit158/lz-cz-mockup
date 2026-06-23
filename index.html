@@ -597,43 +597,6 @@
   </div>
 </section>
 
-<!-- ══ HORIZONTAL SCROLL ════════════════════════════ -->
-<section id="h-section">
-  <div class="h-track" id="h-track">
-    <div class="h-panel">
-      <img src="assets/frame_02.jpg" alt="LZ-01 Lancaster" />
-      <div class="h-panel-grad"></div>
-      <div class="h-info">
-        <span class="h-tag">Kolekce Bohemia — Model LZ-01</span>
-        <h2 class="h-title">Lancaster</h2>
-        <p class="h-sub">Lancaster systém · Německý napínáček · Výměnná hlaveň</p>
-      </div>
-    </div>
-    <div class="h-panel">
-      <img src="assets/frame_04.jpg" alt="LZ-02 Hamerles" />
-      <div class="h-panel-grad"></div>
-      <div class="h-info">
-        <span class="h-tag">Kolekce Bohemia — Model LZ-02</span>
-        <h2 class="h-title">Hamerles</h2>
-        <p class="h-sub">Hřbetní napínání · Otvírací boční deska · Výměnná hlaveň</p>
-      </div>
-    </div>
-    <div class="h-panel">
-      <img src="assets/frame_06.jpg" alt="Detail napínáčku a mechanismu" />
-      <div class="h-panel-grad"></div>
-      <div class="h-info">
-        <span class="h-tag">Kolekce Bohemia — Mechanismus</span>
-        <h2 class="h-title">Německý napínáček</h2>
-        <p class="h-sub">Precizní bicí ústrojí · Náhled na mechanismus · Povrch DLC</p>
-      </div>
-    </div>
-  </div>
-  <div class="h-prog" id="h-prog">
-    <div class="h-dot active"></div>
-    <div class="h-dot"></div>
-    <div class="h-dot"></div>
-  </div>
-</section>
 
 <!-- ══ MODEL · LZ-01 LANCASTER ═══════════════════════ -->
 <section id="detail-panels">
@@ -925,24 +888,6 @@ document.querySelectorAll('[data-par-break]').forEach(img=>{
     yPercent:-10,ease:'none',
     scrollTrigger:{trigger:img.parentElement,start:'top bottom',end:'bottom top',scrub:1}
   });
-});
-
-/* ── HORIZONTAL SCROLL ───────────────────────────── */
-const ht=document.getElementById('h-track');
-const hps=ht.querySelectorAll('.h-panel');
-const dots=document.querySelectorAll('.h-dot');
-const tw=()=>(hps.length-1)*window.innerWidth;
-
-gsap.to(ht,{
-  x:()=>-tw(),ease:'none',
-  scrollTrigger:{
-    trigger:'#h-section',start:'top top',end:()=>'+=' +tw(),
-    scrub:1,pin:true,anticipatePin:1,
-    onUpdate:s=>{
-      const idx=Math.round(s.progress*(hps.length-1));
-      dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
-    }
-  }
 });
 
 /* ── STATS COUNTER ───────────────────────────────── */
