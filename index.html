@@ -263,9 +263,11 @@
     .coll-title { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(2.2rem,4.5vw,4rem);font-weight:700;color:var(--white);letter-spacing:.04em;text-transform:uppercase; }
     .coll-count { font-family:'Josefin Sans',sans-serif;font-size:.58rem;font-weight:300;letter-spacing:.32em;color:var(--metal);text-transform:uppercase; }
 
-    .coll-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; padding-bottom: 110px; }
+    .coll-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; padding-bottom: 110px; }
+    .coll-item.tall { aspect-ratio: 16/10; }
 
     .coll-item {
+      display: block; text-decoration: none;
       position: relative; overflow: hidden; aspect-ratio: 3/4; cursor: pointer;
       background: var(--bg);
     }
@@ -346,6 +348,24 @@
     .spec-list li { display:flex;justify-content:space-between;align-items:center;font-family:'Josefin Sans',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.12em;padding:14px 0;border-bottom:1px solid rgba(201,164,110,.1); }
     .sk { color:var(--metal);text-transform:uppercase;letter-spacing:.28em; }
     .sv { color:var(--goldp);letter-spacing:.08em; }
+
+    /* ── MODEL GALLERY (foto pohledy) ────────────────── */
+    .m-gallery { display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bg); }
+    .m-shot { position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--bg3); }
+    .m-shot img {
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center;
+      transition:transform .9s cubic-bezier(.25,.46,.45,.94);
+      filter:brightness(.72) saturate(.9);
+    }
+    .m-shot:hover img { transform:scale(1.06); }
+    .m-shot-cap {
+      position:absolute;bottom:22px;left:22px;z-index:2;
+      font-family:'Josefin Sans',sans-serif;font-size:.5rem;font-weight:300;
+      letter-spacing:.3em;text-transform:uppercase;color:var(--goldp);
+      background:rgba(23,17,13,.55);padding:6px 12px;backdrop-filter:blur(2px);
+    }
+    @media(max-width:900px){ .m-gallery{grid-template-columns:1fr;} }
 
     /* ── FULL-BLEED IMAGE BREAK ──────────────────────── */
     .img-break {
@@ -541,6 +561,7 @@
     <h2 class="s-head">Lovecké zbraně,<br /><em>které definují standard</em></h2>
     <p class="s-body">V malebné západočeské obci Břasy, obklopené hlubokými lesy, které po staletí psaly historii českého lovectví, vzniká něco výjimečného. Značka LZ-CZ zde s hrdostí pokračuje v proslulé tradici české zbrojařské výroby. Každá naše puška je příběhem o nekompromisní kvalitě, trpělivosti a vášni pro detail.</p>
     <p class="s-body">Věříme, že špičková zbraň vyžaduje soulad dvou světů — chirurgické přesnosti moderních strojů a citu lidské ruky. Ruční dopasování, precizní gravírování a finální úprava výběrového ořechového dřeva dávají každé zbrani nezaměnitelný charakter.</p>
+    <p class="s-body">Naše zbraně navazují na etické pojetí lovu, v němž se snoubí úcta k přírodě, tradice a odpovědnost. Připomínají dobu, kdy byl lov pevně spjat s respektem ke zvěři, k lesu i k řemeslu samotnému. Právě v tomto duchu vzniká zbraň, která není jen nástrojem, ale i vyjádřením postoje a úcty k lovu.</p>
     <p class="s-body" style="color:var(--gold);opacity:.9;font-style:italic">LZ-CZ – Preciznost ze západu Čech. Navrženo pro okamžik, na kterém záleží.</p>
     <a href="#collection" class="tlink">Naše kolekce <span class="arr"></span></a>
   </div>
@@ -549,40 +570,30 @@
 <!-- ══ COLLECTION ════════════════════════════════════ -->
 <section id="collection">
   <div class="coll-head">
-    <h2 class="coll-title">Naše<br /><em style="font-style:oblique;color:var(--goldp);font-weight:700;letter-spacing:.03em">Kolekce</em></h2>
-    <span class="coll-count">3 řady / 12 modelů</span>
+    <h2 class="coll-title">Naše kolekce<br /><em style="font-style:oblique;color:var(--goldp);font-weight:700;letter-spacing:.03em">Bohemia</em></h2>
+    <span class="coll-count">Kolekce Bohemia / 2 modely</span>
   </div>
   <div class="coll-grid">
-    <div class="coll-item">
-      <img src="assets/frame_01.jpg" alt="LZ-CZ Imperial — plná puška" />
+    <a href="#model-lancaster" class="coll-item tall">
+      <img src="assets/frame_01.jpg" alt="LZ-01 Lancaster — celkový pohled" />
       <div class="coll-item-ov"></div>
       <span class="coll-n">01</span>
       <div class="coll-info">
-        <p class="ci-model">Model Imperial</p>
-        <h3 class="ci-name">Karabina s dalekohledem</h3>
-        <p class="ci-desc">Sportovní karabina s prémiovým optickým zaměřovačem Swarovski Z8i, vyřezávanou lůžkovou deskou a ořechovým pažbením.</p>
+        <p class="ci-model">Model LZ-01</p>
+        <h3 class="ci-name">Lancaster</h3>
+        <p class="ci-desc">Zlamovací jednoranná lancasterová kulovnice s německým napínáčkem a možností výměnné hlavně v šesti rážích.</p>
       </div>
-    </div>
-    <div class="coll-item">
-      <img src="assets/frame_04.jpg" alt="LZ-CZ Imperial — detail závěru" style="object-position:60% center;" />
+    </a>
+    <a href="#model-hamerles" class="coll-item tall">
+      <img src="assets/frame_04.jpg" alt="LZ-02 Hamerles — celkový pohled" style="object-position:60% center;" />
       <div class="coll-item-ov"></div>
       <span class="coll-n">02</span>
       <div class="coll-info">
-        <p class="ci-model">Model Heritage</p>
-        <h3 class="ci-name">Arabeskový závěr</h3>
-        <p class="ci-desc">Závodně fémovaná lůžková deska s ručně rytou arabeskou — každý kus je jedinečný výtvor mistra gravéra.</p>
+        <p class="ci-model">Model LZ-02</p>
+        <h3 class="ci-name">Hamerles</h3>
+        <p class="ci-desc">Zlamovací jednoranná kulovnice s hřbetním napínáním a otvírací boční deskou pro náhled na mechanismus.</p>
       </div>
-    </div>
-    <div class="coll-item">
-      <img src="assets/frame_05.jpg" alt="LZ-CZ Imperial — gravura a zaměřovač" />
-      <div class="coll-item-ov"></div>
-      <span class="coll-n">03</span>
-      <div class="coll-info">
-        <p class="ci-model">Model Exclusive</p>
-        <h3 class="ci-name">Limitovaná edice</h3>
-        <p class="ci-desc">Pouze 12 kusů ročně — každá puška nese sériové číslo a certifikát pravosti podepsaný hlavním mistrem.</p>
-      </div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -590,39 +601,39 @@
 <section id="h-section">
   <div class="h-track" id="h-track">
     <div class="h-panel">
-      <img src="assets/frame_01.jpg" alt="Plný záběr" />
+      <img src="assets/frame_01.jpg" alt="Kolekce Bohemia — celkový pohled" />
       <div class="h-panel-grad"></div>
       <div class="h-info">
-        <span class="h-tag">Imperial Series — Celkový pohled</span>
-        <h2 class="h-title">LZ-CZ Imperial</h2>
-        <p class="h-sub">Lovecká karabina · Kalibr .30-06 · Swarovski Z8i</p>
+        <span class="h-tag">Kolekce Bohemia — Celkový pohled</span>
+        <h2 class="h-title">Bohemia</h2>
+        <p class="h-sub">Dva modely · Zlamovací jednoranné kulovnice · Povrch DLC</p>
       </div>
     </div>
     <div class="h-panel">
-      <img src="assets/frame_03.jpg" alt="Střední záběr" />
+      <img src="assets/frame_02.jpg" alt="LZ-01 Lancaster" />
       <div class="h-panel-grad"></div>
       <div class="h-info">
-        <span class="h-tag">Imperial Series — Profil</span>
-        <h2 class="h-title">Ořechové pažbení</h2>
-        <p class="h-sub">Čerešňový ořech · Ruční profilování · 80+ hod.</p>
+        <span class="h-tag">Kolekce Bohemia — Model LZ-01</span>
+        <h2 class="h-title">Lancaster</h2>
+        <p class="h-sub">Lancaster systém · Německý napínáček · Výměnná hlaveň</p>
       </div>
     </div>
     <div class="h-panel">
-      <img src="assets/frame_04.jpg" alt="Detail závěru" />
+      <img src="assets/frame_04.jpg" alt="LZ-02 Hamerles" />
       <div class="h-panel-grad"></div>
       <div class="h-info">
-        <span class="h-tag">Imperial Series — Mechanismus</span>
-        <h2 class="h-title">Závodní závěr</h2>
-        <p class="h-sub">Chromová ocel · Nastavitelná spoušť · Brunýrování</p>
+        <span class="h-tag">Kolekce Bohemia — Model LZ-02</span>
+        <h2 class="h-title">Hamerles</h2>
+        <p class="h-sub">Hřbetní napínání · Otvírací boční deska · Výměnná hlaveň</p>
       </div>
     </div>
     <div class="h-panel">
-      <img src="assets/frame_06.jpg" alt="Extrémní detail" />
+      <img src="assets/frame_06.jpg" alt="Detail napínáčku a mechanismu" />
       <div class="h-panel-grad"></div>
       <div class="h-info">
-        <span class="h-tag">Imperial Series — Arabeska</span>
-        <h2 class="h-title">Ručně rytá gravura</h2>
-        <p class="h-sub">Mistrovská arabeska · 120 hodin práce · Unikátní vzor</p>
+        <span class="h-tag">Kolekce Bohemia — Mechanismus</span>
+        <h2 class="h-title">Německý napínáček</h2>
+        <p class="h-sub">Precizní bicí ústrojí · Náhled na mechanismus · Povrch DLC</p>
       </div>
     </div>
   </div>
@@ -634,60 +645,75 @@
   </div>
 </section>
 
-<!-- ══ DETAIL PANELS ═════════════════════════════════ -->
+<!-- ══ MODEL · LZ-01 LANCASTER ═══════════════════════ -->
 <section id="detail-panels">
 
-  <div class="d-panel">
+  <div class="d-panel" id="model-lancaster">
     <div class="d-img" id="d1">
-      <img src="assets/frame_05.jpg" alt="Zaměřovač Swarovski" data-par />
-      <span class="d-img-cap">Detail · Optika Swarovski Z8i</span>
+      <img src="assets/frame_01.jpg" alt="LZ-01 Lancaster — celkový pohled" data-par />
+      <span class="d-img-cap">Celkový pohled · pravá strana</span>
     </div>
     <div class="d-text dark">
-      <span class="d-detail-label">Detail 01</span>
-      <h3 class="d-head rl"><span class="rl-i">Optika <em>Swarovski</em></span></h3>
-      <p class="d-body">Každá Imperial karabina je standardně vybavena optickým zaměřovačem Swarovski Z8i, montovaným na přesnou základnu z modifikované chromové oceli. Průzor 56mm zajišťuje výjimečný příjem světla za soumraku.</p>
+      <span class="d-detail-label">Model LZ-01</span>
+      <h3 class="d-head rl"><span class="rl-i"><em>Lancaster</em></span></h3>
+      <p class="d-body">Zlamovací jednoranná lancasterová kulovnice s německým napínáčkem. Možnost výběru výměnné hlavně v rážích .22&nbsp;HORNET, 6,5×52R, 9,3×72R, .30-30&nbsp;WINCHESTER, 410×76&nbsp;BROK a .25-20&nbsp;SINGLE&nbsp;SHOT.</p>
       <ul class="spec-list">
-        <li><span class="sk">Zvětšení</span><span class="sv">2–16 × 56</span></li>
-        <li><span class="sk">Montáž</span><span class="sv">Závodní pivot EAW</span></li>
-        <li><span class="sk">Povlak optiky</span><span class="sv">SWAROLIGHT anti-reflex</span></li>
-        <li><span class="sk">Osvětlení</span><span class="sv">Červený záměrný bod</span></li>
+        <li><span class="sk">Délka hlavně</span><span class="sv">62 cm</span></li>
+        <li><span class="sk">Délka celková</span><span class="sv">105,5 cm</span></li>
+        <li><span class="sk">Váha</span><span class="sv">2,73 kg</span></li>
+        <li><span class="sk">Povrch</span><span class="sv">DLC</span></li>
       </ul>
     </div>
   </div>
 
-  <div class="d-panel" style="direction:rtl">
+  <!-- LZ-01 · galerie pohledů (foto se doplní) -->
+  <div class="m-gallery">
+    <div class="m-shot">
+      <img src="assets/frame_02.jpg" alt="LZ-01 Lancaster — levá strana" />
+      <span class="m-shot-cap">Celkový pohled · levá strana</span>
+    </div>
+    <div class="m-shot">
+      <img src="assets/frame_04.jpg" alt="LZ-01 Lancaster — detail napínání" />
+      <span class="m-shot-cap">Detail · napínání</span>
+    </div>
+    <div class="m-shot">
+      <img src="assets/frame_05.jpg" alt="LZ-01 Lancaster — zlomená" />
+      <span class="m-shot-cap">Zlomená · dofotíme</span>
+    </div>
+  </div>
+
+  <!-- ══ MODEL · LZ-02 HAMERLES ══════════════════════ -->
+  <div class="d-panel" id="model-hamerles" style="direction:rtl">
     <div class="d-img" id="d2" style="direction:ltr">
-      <img src="assets/frame_04.jpg" alt="Závěr a gravura" data-par />
-      <span class="d-img-cap">Detail · Závodní závěr</span>
+      <img src="assets/frame_04.jpg" alt="LZ-02 Hamerles — celkový pohled" data-par />
+      <span class="d-img-cap">Celkový pohled · pravá strana</span>
     </div>
     <div class="d-text darker" style="direction:ltr">
-      <span class="d-detail-label">Detail 02</span>
-      <h3 class="d-head rl"><span class="rl-i"><em>Arabeskový</em> závěr</span></h3>
-      <p class="d-body">Lůžková deska z kalené oceli je ručně rytá arabeskou — stylizovanými úponky a florálními motivy v tradici bavorského zbrojařství. Každý kus vyžaduje 80–120 hodin práce hlavního gravéra.</p>
+      <span class="d-detail-label">Model LZ-02</span>
+      <h3 class="d-head rl"><span class="rl-i"><em>Hamerles</em></span></h3>
+      <p class="d-body">Zlamovací jednoranná kulovnice s hřbetním napínáním bicího ústrojí s německým napínáčkem a otvírací boční deskou k náhledu na mechanismus. Možnost výběru výměnné hlavně v rážích .22&nbsp;HORNET, 6,5×52R, 9,3×72R, .30-30&nbsp;WINCHESTER, 410×76&nbsp;BROK a .25-20&nbsp;SINGLE&nbsp;SHOT.</p>
       <ul class="spec-list">
-        <li><span class="sk">Materiál</span><span class="sv">Chromová ocel 42CrMo4</span></li>
-        <li><span class="sk">Gravura</span><span class="sv">Ručně, 80–120 hod.</span></li>
-        <li><span class="sk">Povrch</span><span class="sv">Brunýrování / Nikl</span></li>
-        <li><span class="sk">Spoušť</span><span class="sv">Set-trigger, nastavitelný</span></li>
+        <li><span class="sk">Délka hlavně</span><span class="sv">62 cm</span></li>
+        <li><span class="sk">Délka celková</span><span class="sv">105,5 cm</span></li>
+        <li><span class="sk">Váha</span><span class="sv">doplníme</span></li>
+        <li><span class="sk">Povrch</span><span class="sv">DLC</span></li>
       </ul>
     </div>
   </div>
 
-  <div class="d-panel">
-    <div class="d-img" id="d3">
-      <img src="assets/frame_06.jpg" alt="Extrémní detail optiky a pažby" data-par />
-      <span class="d-img-cap">Detail · Ořechová pažba</span>
+  <!-- LZ-02 · galerie pohledů (foto se doplní) -->
+  <div class="m-gallery">
+    <div class="m-shot">
+      <img src="assets/frame_03.jpg" alt="LZ-02 Hamerles — levá strana" />
+      <span class="m-shot-cap">Celkový pohled · levá strana</span>
     </div>
-    <div class="d-text dark">
-      <span class="d-detail-label">Detail 03</span>
-      <h3 class="d-head rl"><span class="rl-i">Ořechové <em>pažbení</em></span></h3>
-      <p class="d-body">Pažba je vyrobena z vybraných kusů čerešňového ořechu s výraznou kresbou letokruhů. Každý kus prochází šestiměsíčním sušením a ručním tvarováním, aby přesně přilnul k závěru a zajistil optimální ergonomii.</p>
-      <ul class="spec-list">
-        <li><span class="sk">Dřevo</span><span class="sv">Čerešňový ořech, AA+</span></li>
-        <li><span class="sk">Sušení</span><span class="sv">6 měsíců přirozené</span></li>
-        <li><span class="sk">Povrchová úprava</span><span class="sv">Olejový nátěr, 8 vrstev</span></li>
-        <li><span class="sk">Profilování</span><span class="sv">Ručně, 40+ hod.</span></li>
-      </ul>
+    <div class="m-shot">
+      <img src="assets/frame_06.jpg" alt="LZ-02 Hamerles — detail napínání a boční desky" />
+      <span class="m-shot-cap">Detail · napínání / boční deska</span>
+    </div>
+    <div class="m-shot">
+      <img src="assets/frame_05.jpg" alt="LZ-02 Hamerles — zlomená" />
+      <span class="m-shot-cap">Zlomená · dofotíme</span>
     </div>
   </div>
 
