@@ -401,6 +401,46 @@
       text-shadow:0 4px 30px rgba(0,0,0,.5);
     }
 
+    /* ── PRODUCTION (Výroba a technologie) ───────────── */
+    #production { background: var(--bg); padding: 120px 0 110px; }
+    .prod-head { max-width: 900px; margin: 0 auto; padding: 0 60px; display:flex; flex-direction:column; gap:26px; }
+    .prod-intro { font-family:'Source Sans 3',sans-serif;font-size:1.05rem;line-height:1.95;color:var(--text);opacity:.9;max-width:680px; }
+    .prod-intro em { font-style:italic;color:var(--goldp); }
+
+    /* Video banner */
+    .prod-video-wrap { position:relative; margin:70px 0; height:62vh; min-height:380px; overflow:hidden; }
+    .prod-video-wrap video { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.62) saturate(.9); }
+    .prod-video-grad { position:absolute;inset:0;background:linear-gradient(to top, rgba(23,17,13,.85) 0%, transparent 45%),linear-gradient(to right, rgba(23,17,13,.5) 0%, transparent 50%); }
+    .prod-video-cap { position:absolute;bottom:40px;left:60px;z-index:2;display:flex;flex-direction:column;gap:8px; }
+    .prod-video-cap .pv-tag { font-family:'Josefin Sans',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.5em;text-transform:uppercase;color:var(--gold); }
+    .prod-video-cap .pv-txt { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(1.4rem,2.6vw,2.2rem);font-weight:700;font-style:oblique;color:var(--white);letter-spacing:.02em;text-transform:uppercase; }
+
+    /* Two feature cards: ocel + DLC */
+    .prod-grid { max-width:1200px;margin:0 auto;padding:0 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px; }
+    .prod-card { display:flex;flex-direction:column;gap:16px;border-top:1px solid rgba(201,164,110,.18);padding-top:26px; }
+    .prod-card-label { font-family:'Josefin Sans',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.45em;text-transform:uppercase;color:var(--gold); }
+    .prod-card-title { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:1.25rem;font-weight:700;color:var(--white);letter-spacing:.03em;text-transform:uppercase; }
+    .prod-card p { font-family:'Source Sans 3',sans-serif;font-size:.92rem;line-height:1.9;color:var(--text);opacity:.85; }
+
+    /* CNC list + zbrojiri columns */
+    .prod-cols { max-width:1200px;margin:80px auto 0;padding:0 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start; }
+    .prod-col-label { font-family:'Josefin Sans',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:24px; }
+    .prod-col-label::before { content:'';width:24px;height:1px;background:var(--gold); }
+    .prod-list { list-style:none;display:flex;flex-direction:column;gap:0; }
+    .prod-list li { font-family:'Source Sans 3',sans-serif;font-size:.95rem;color:var(--text);opacity:.88;padding:13px 0;border-bottom:1px solid rgba(201,164,110,.1);display:flex;align-items:center;gap:14px; }
+    .prod-list li::before { content:'◆';color:var(--gold);font-size:.4rem; }
+    .prod-col p { font-family:'Source Sans 3',sans-serif;font-size:.95rem;line-height:1.9;color:var(--text);opacity:.85; }
+
+    /* Closing quote */
+    .prod-quote { max-width:900px;margin:80px auto 0;padding:0 60px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(1.2rem,2.2vw,1.7rem);font-weight:700;font-style:oblique;color:var(--white);line-height:1.6;letter-spacing:.02em; }
+    .prod-quote em { color:var(--goldp);font-style:oblique; }
+
+    @media(max-width:900px){
+      .prod-grid,.prod-cols{grid-template-columns:1fr;gap:40px;}
+      .prod-video-cap{left:30px;}
+      .prod-head,.prod-grid,.prod-cols,.prod-quote{padding-left:30px;padding-right:30px;}
+    }
+
     /* ── STATS ───────────────────────────────────────── */
     #stats { padding:0; display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bg2); }
     .stat { padding:70px 40px;background:var(--bg);display:flex;flex-direction:column;gap:14px;border-bottom:2px solid transparent;transition:border-color .4s; }
@@ -527,6 +567,7 @@
     <li><a href="#philosophy">FILOSOFIE</a></li>
     <li><a href="#collection">KOLEKCE</a></li>
     <li><a href="#detail-panels">ŘEMESLO</a></li>
+    <li><a href="#production">VÝROBA</a></li>
     <li><a href="#contact">KONTAKT</a></li>
   </ul>
 </nav>
@@ -711,6 +752,71 @@
   <div style="position:absolute;inset:0;background:rgba(23,17,13,.35)"></div>
   <div class="img-break-text">"Preciznost není náhoda."</div>
 </div>
+
+<!-- ══ VÝROBA A TECHNOLOGIE ═══════════════════════════ -->
+<section id="production">
+  <div class="prod-head">
+    <span class="s-label">Výroba a technologie</span>
+    <h2 class="s-head">Vlastní výroba,<br /><em>od oceli po duši zbraně</em></h2>
+    <p class="prod-intro">Každá zbraň LZ-CZ vzniká kompletně u nás — od výběru materiálu přes obrábění až po finální ruční dopasování. Spojujeme <em>chirurgickou přesnost moderních CNC strojů</em> s citem a zkušeností mistrů zbrojířů, díky čemuž má každý kus nezaměnitelný charakter.</p>
+  </div>
+
+  <div class="prod-video-wrap" data-par>
+    <video src="assets/footer-bg.mp4" autoplay muted loop playsinline></video>
+    <div class="prod-video-grad"></div>
+    <div class="prod-video-cap">
+      <span class="pv-tag">Z naší dílny · video se doplní</span>
+      <span class="pv-txt">Řemeslo v pohybu</span>
+    </div>
+  </div>
+
+  <div class="prod-grid">
+    <div class="prod-card">
+      <span class="prod-card-label">Ocel & kovové komponenty</span>
+      <h3 class="prod-card-title">Materiál nejvyšší jakosti</h3>
+      <p>Klíčové komponenty obrábíme z prémiové oceli od Moravia Steel — jakosti 15142 (1.7225) a 14260 (1.7103). Každá tavba prochází metalurgickými rozbory, aby hlaveň i mechanika odolaly extrémnímu namáhání po celé generace.</p>
+    </div>
+    <div class="prod-card">
+      <span class="prod-card-label">DLC povrchová úprava</span>
+      <h3 class="prod-card-title">Diamantově tvrdý povlak</h3>
+      <p>Finální povrch tvoří DLC — diamantu podobný uhlíkový povlak. Poskytuje výjimečnou odolnost proti otěru a korozi, snižuje tření pohyblivých dílů a dává zbrani její hluboký, matný charakter.</p>
+    </div>
+  </div>
+
+  <div class="prod-cols">
+    <div class="prod-col">
+      <span class="prod-col-label">Strojový park</span>
+      <ul class="prod-list">
+        <li>Pětiosá CNC frézka</li>
+        <li>Čtyřosá CNC frézka</li>
+        <li>Drátová řezačka (drátořez)</li>
+        <li>Soustruhy</li>
+        <li>Laserové gravírovací stroje</li>
+      </ul>
+    </div>
+    <div class="prod-col">
+      <span class="prod-col-label">Mistři zbrojíři</span>
+      <p>Tam, kde stroje končí, začíná práce našich zbrojířů. Mechaniku dolaďují na setiny milimetru, ručně pasují jednotlivé díly, ladí chod spouště a kontrolují každou hlaveň. Právě tato lidská preciznost dělá ze zbraně víc než jen nástroj.</p>
+    </div>
+  </div>
+
+  <div class="m-gallery">
+    <div class="m-shot">
+      <img src="assets/frame_03.jpg" alt="Dílna LZ-CZ — obrábění" />
+      <span class="m-shot-cap">Dílna · foto se doplní</span>
+    </div>
+    <div class="m-shot">
+      <img src="assets/frame_06.jpg" alt="CNC obrábění komponentů" />
+      <span class="m-shot-cap">CNC obrábění · foto se doplní</span>
+    </div>
+    <div class="m-shot">
+      <img src="assets/frame_01.jpg" alt="Ruční dopasování zbrojířem" />
+      <span class="m-shot-cap">Ruční dopasování · foto se doplní</span>
+    </div>
+  </div>
+
+  <p class="prod-quote">"Moderní technologie nám dávají přesnost. <em>Naši zbrojíři dávají zbraním duši.</em>"</p>
+</section>
 
 <!-- ══ STATS ═════════════════════════════════════════ -->
 <section id="stats">
