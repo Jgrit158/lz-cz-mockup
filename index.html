@@ -20,7 +20,7 @@
       --bg2:     #231a13;
       --bg3:     #2e2218;
       --gold:    #c9a46e;
-      --goldp:   #e8d4aa;
+      --goldp:   #b59e7d;
       --cream:   #f4ede0;
       --metal:   #9a9590;
       --text:    #c8bfb4;
@@ -541,9 +541,15 @@
     /* základní pozadí stránky (kdyby prosvítalo při overscrollu) */
     body{ background: var(--olv-bg); }
 
-    /* ── MARQUEE → olivový pruh ──────────────────────── */
-    .mq{ background: linear-gradient(90deg,#565c32 0%,#737a44 50%,#565c32 100%) !important; }
-    .mq-item{ color: #f3f1e2 !important; }
+    /* ── MARQUEE → šedo-olivový pruh #959581 ─────────── */
+    .mq{ background: #959581 !important; }
+    .mq-item{ color: #17110d !important; }
+
+    /* ── JEMNÝ RÁMEČEK KOLEM FOTOGRAFIÍ ──────────────── */
+    /* odsazení v barvě pozadí — fotky nejsou do krajů */
+    .phil-img, .coll-item, .d-img, .m-shot, .img-break{
+      border: 12px solid var(--olv-bg) !important;
+    }
 
     /* jednotné mezery a odsazení textových bloků (O nás = modely) */
     #philosophy .phil-text{ padding: 100px 80px; gap: 34px; }
