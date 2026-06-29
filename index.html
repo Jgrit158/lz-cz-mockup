@@ -527,88 +527,62 @@
       .h-info{padding:40px 30px;}
     }
     /* ═══════════════════════════════════════════════════════════
-       SVĚTLÉ TÉMA — HNĚDO-ZELENÝ → BÍLÝ GRADIENT
-       Tmavé sekce s fotkou/videem (hero, předěl, reference, kontakt,
-       patička) zůstávají záměrně tmavé pro cinematic kontrast.
-       Čtecí sekce se překlápí do olivově-khaki → bílého přechodu.
+       TMAVÉ OLIVOVÉ TÉMA — pozadí #3e4130, text #EBEAE6
+       Čtecí sekce (O nás, Kolekce, detaily, Výroba, čítače) mají
+       jednotné tmavě olivové pozadí. Fotky/video sekce zůstávají
+       v původním tmavém tónu pro cinematic kontrast.
        ═══════════════════════════════════════════════════════════ */
     :root{
-      --lt-green: #4e5530;   /* hluboká oliva — zvýraznění */
-      --lt-olive: #575d31;   /* akcentní linky a labely */
-      --lt-ink:   #2b2e21;   /* hlavní tmavý nadpis */
-      --lt-body:  #43473a;   /* tělový text */
-      --lt-mut:   #595c48;   /* tlumený text/labely */
+      --olv-bg:  #3e4130;   /* tmavá oliva — pozadí čtecích sekcí */
+      --olv-bg2: #363929;   /* tmavší varianta pro oddělení */
+      --olv-tx:  #ebeae6;   /* světlý text */
     }
 
-    /* základní světlé pozadí stránky (kdyby prosvítalo) */
-    body{ background: #eef0e4; }
+    /* základní pozadí stránky (kdyby prosvítalo při overscrollu) */
+    body{ background: var(--olv-bg); }
 
     /* ── MARQUEE → olivový pruh ──────────────────────── */
     .mq{ background: linear-gradient(90deg,#565c32 0%,#737a44 50%,#565c32 100%) !important; }
     .mq-item{ color: #f3f1e2 !important; }
 
-    /* ── PHILOSOPHY (světlá) ─────────────────────────── */
-    #philosophy .phil-text{ background: linear-gradient(135deg,#cdd2b3 0%,#eef0e4 52%,#ffffff 100%) !important; }
-    #philosophy .s-label{ color: var(--lt-olive); }
-    #philosophy .s-label::before{ background: var(--lt-olive); }
-    #philosophy .s-head{ color: var(--lt-ink); }
-    #philosophy .s-head em{ color: var(--lt-green); }
-    #philosophy .s-body{ color: var(--lt-body); opacity: .95; }
-    #philosophy .s-body[style]{ color: var(--lt-green) !important; opacity: 1 !important; }
-    #philosophy .tlink, #philosophy .tlink .arr::after{ color: var(--lt-olive); }
-    #philosophy .tlink .arr{ background: var(--lt-olive); }
-    #philosophy .tlink .arr::after{ border-color: var(--lt-olive); }
-    #philosophy .phil-img-cap{ color: #f0eee0; }
+    /* jednotné mezery a odsazení textových bloků (O nás = modely) */
+    #philosophy .phil-text{ padding: 100px 80px; gap: 34px; }
+    .d-text{ padding: 100px 80px; gap: 34px; }
+    #philosophy .s-body, .d-body, .d-feature-text{ max-width: 480px; }
 
-    /* ── COLLECTION (světlá hlavička) ────────────────── */
-    #collection{ background: linear-gradient(160deg,#e6e9d4 0%,#f6f5ee 60%,#ffffff 100%) !important; }
-    #collection .coll-title{ color: var(--lt-ink); }
-    #collection .coll-count{ color: var(--lt-mut); }
+    /* značka na začátku sekce O nás */
+    .phil-brand{ font-family:'Josefin Sans',sans-serif; font-size:1.4rem; font-weight:600; letter-spacing:.5em; text-transform:uppercase; color:var(--goldp); }
 
-    /* ── DETAIL PANELS (světlý text vedle fotky) ─────── */
-    .d-text.dark{ background: linear-gradient(135deg,#d4d8bd 0%,#eef0e4 55%,#fbfbf6 100%) !important; }
-    .d-text.darker{ background: linear-gradient(135deg,#c9cfb0 0%,#e8ebdb 55%,#f7f7f0 100%) !important; }
-    .d-text .d-detail-label{ color: var(--lt-mut); }
-    .d-text .d-detail-label::before{ background: var(--lt-mut); }
-    .d-text .d-head{ color: var(--lt-ink); }
-    .d-text .d-head em{ color: var(--lt-green); }
-    .d-text .d-body{ color: var(--lt-body); opacity: .95; }
-    .d-text .spec-list li{ border-bottom-color: rgba(78,85,48,.2); }
-    .d-text .sk{ color: var(--lt-mut); }
-    .d-text .sv{ color: var(--lt-green); }
-    .d-text .d-feature-label{ color: var(--lt-olive); }
-    .d-text .d-feature-label::before{ background: var(--lt-olive); }
-    .d-text .d-feature-text{ color: var(--lt-body); opacity: .95; }
-    .d-text .d-feature-spec{ color: var(--lt-green); }
-    .d-text .d-feature-spec .sk{ color: var(--lt-mut); }
+    /* ── PHILOSOPHY (tmavá oliva) ────────────────────── */
+    #philosophy .phil-text{ background: var(--olv-bg) !important; }
+    #philosophy .s-head{ color: var(--olv-tx); }
+    #philosophy .s-body{ color: var(--olv-tx); opacity: .9; }
 
-    /* ── PRODUCTION (světlá) ─────────────────────────── */
-    #production{ background: linear-gradient(180deg,#ccd2b0 0%,#eceee0 45%,#ffffff 100%) !important; }
-    #production .s-label{ color: var(--lt-olive); }
-    #production .s-label::before{ background: var(--lt-olive); }
-    #production .s-head{ color: var(--lt-ink); }
-    #production .s-head em{ color: var(--lt-green); }
-    #production .prod-intro{ color: var(--lt-body); opacity: .95; }
-    #production .prod-intro em{ color: var(--lt-green); }
-    #production .prod-card{ border-top-color: rgba(78,85,48,.24); }
-    #production .prod-card-label{ color: var(--lt-olive); }
-    #production .prod-card-title{ color: var(--lt-ink); }
-    #production .prod-card p{ color: var(--lt-body); opacity: .95; }
-    #production .prod-col-label{ color: var(--lt-olive); }
-    #production .prod-col-label::before{ background: var(--lt-olive); }
-    #production .prod-list li{ color: var(--lt-body); border-bottom-color: rgba(78,85,48,.16); }
-    #production .prod-list li::before{ color: var(--lt-olive); }
-    #production .prod-col p{ color: var(--lt-body); opacity: .95; }
-    #production .prod-quote{ color: var(--lt-ink); }
-    #production .prod-quote em{ color: var(--lt-green); }
-    /* popisek na videu zůstává světlý (přes tmavé video) */
+    /* ── COLLECTION (tmavá oliva) ────────────────────── */
+    #collection{ background: var(--olv-bg) !important; }
+    #collection .coll-title{ color: var(--olv-tx); }
 
-    /* ── STATS (světlý olivový pruh) ─────────────────── */
-    #stats{ background: linear-gradient(135deg,#ccd2b0 0%,#e7ead7 100%) !important; }
-    #stats .stat{ background: rgba(255,255,255,.28) !important; }
-    #stats .stat:hover{ border-color: var(--lt-olive); }
-    #stats .stat-n{ color: var(--lt-green) !important; }
-    #stats .stat-l{ color: var(--lt-mut) !important; }
+    /* ── DETAIL PANELS (tmavá oliva) ─────────────────── */
+    .d-text.dark{ background: var(--olv-bg) !important; }
+    .d-text.darker{ background: var(--olv-bg) !important; }
+    .d-text .d-head{ color: var(--olv-tx); }
+    .d-text .d-body{ color: var(--olv-tx); opacity: .9; }
+    .d-text .d-feature-text{ color: var(--olv-tx); opacity: .9; }
+
+    /* ── PRODUCTION (tmavá oliva) ────────────────────── */
+    #production{ background: var(--olv-bg) !important; }
+    #production .s-head{ color: var(--olv-tx); }
+    #production .prod-intro{ color: var(--olv-tx); opacity: .9; }
+    #production .prod-card-title{ color: var(--olv-tx); }
+    #production .prod-card p{ color: var(--olv-tx); opacity: .9; }
+    #production .prod-list li{ color: var(--olv-tx); }
+    #production .prod-col p{ color: var(--olv-tx); opacity: .9; }
+    #production .prod-quote{ color: var(--olv-tx); }
+
+    /* ── STATS (tmavá oliva) ─────────────────────────── */
+    #stats{ background: var(--olv-bg2) !important; }
+    #stats .stat{ background: var(--olv-bg) !important; }
+    #stats .stat-l{ color: var(--olv-tx) !important; opacity: .72; }
 
   </style>
 </head>
@@ -650,7 +624,6 @@
   <ul class="nav-links">
     <li><a href="#philosophy">FILOSOFIE</a></li>
     <li><a href="#collection">KOLEKCE</a></li>
-    <li><a href="#detail-panels">ŘEMESLO</a></li>
     <li><a href="#production">VÝROBA</a></li>
     <li><a href="#contact">KONTAKT</a></li>
   </ul>
@@ -697,6 +670,7 @@
     <span class="phil-img-cap">Detail · LZ-CZ · Břasy</span>
   </div>
   <div class="phil-text">
+    <span class="phil-brand">LZ - CZ</span>
     <span class="s-label">O nás</span>
     <h2 class="s-head">Lovecké zbraně,<br /><em>které definují standard</em></h2>
     <p class="s-body">V malebné západočeské obci Břasy, obklopené hlubokými lesy, které po staletí psaly historii českého lovectví, vzniká něco výjimečného. Značka LZ-CZ zde s hrdostí pokračuje v proslulé tradici české zbrojařské výroby. Každá naše puška je příběhem o nekompromisní kvalitě, trpělivosti a vášni pro detail.</p>
@@ -899,7 +873,7 @@
     </div>
   </div>
 
-  <p class="prod-quote">"Moderní technologie nám dávají přesnost. <em>Naši zbrojíři dávají zbraním duši.</em>"</p>
+  <p class="prod-quote">"Moderní technologie nám dávají přesnost.<br /><em>Naši zbrojíři dávají zbraním duši.</em>"</p>
 </section>
 
 <!-- ══ STATS ═════════════════════════════════════════ -->
