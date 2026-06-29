@@ -605,6 +605,14 @@
     .sbtn::before{ background: #3e4130 !important; }
     .sbtn:hover{ color: #ebeae6 !important; }
 
+    /* ── VÝMĚNNÁ HLAVEŇ — nabídka ráží (vypadá jako výběr) ── */
+    .cal-offer{ display:flex; flex-direction:column; gap:16px; }
+    .cal-offer-label{ font-family:'Josefin Sans',sans-serif; font-size:.52rem; font-weight:700; letter-spacing:.4em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:12px; }
+    .cal-offer-label::before{ content:''; width:18px; height:1px; background:var(--gold); }
+    .cal-opts{ display:flex; flex-wrap:wrap; gap:10px; }
+    .cal-opt{ font-family:'Josefin Sans',sans-serif; font-size:.6rem; font-weight:400; letter-spacing:.1em; color:var(--olv-tx); border:1px solid rgba(181,158,125,.38); padding:11px 16px; background:rgba(255,255,255,.03); transition:border-color .35s, color .35s, background .35s; }
+    .cal-opt:hover{ border-color:var(--goldp); color:var(--goldp); background:rgba(181,158,125,.12); }
+
   </style>
 </head>
 <body>
@@ -744,7 +752,18 @@
     <div class="d-text dark">
       <span class="d-detail-label">Model LZ-01</span>
       <h3 class="d-head rl"><span class="rl-i"><em>Lancaster</em></span></h3>
-      <p class="d-body">Zlamovací jednoranná lancasterová kulovnice s německým napínáčkem. Možnost výběru výměnné hlavně v rážích .22&nbsp;HORNET, 6,5×52R, 9,3×72R, .30-30&nbsp;WINCHESTER, 410×76&nbsp;BROK a .25-20&nbsp;SINGLE&nbsp;SHOT.</p>
+      <p class="d-body">Zlamovací jednoranná lancasterová kulovnice s německým napínáčkem.</p>
+      <div class="cal-offer">
+        <span class="cal-offer-label">Možnost výběru výměnné hlavně — ráže</span>
+        <div class="cal-opts">
+          <span class="cal-opt">.22 HORNET</span>
+          <span class="cal-opt">6,5×52R</span>
+          <span class="cal-opt">9,3×72R</span>
+          <span class="cal-opt">.30-30 WINCHESTER</span>
+          <span class="cal-opt">410×76 BROK</span>
+          <span class="cal-opt">.25-20 SINGLE SHOT</span>
+        </div>
+      </div>
       <ul class="spec-list">
         <li><span class="sk">Délka hlavně</span><span class="sv">62 cm</span></li>
         <li><span class="sk">Délka celková</span><span class="sv">105,5 cm</span></li>
@@ -788,7 +807,18 @@
     <div class="d-text darker" style="direction:ltr">
       <span class="d-detail-label">Model LZ-02</span>
       <h3 class="d-head rl"><span class="rl-i"><em>Hamerles</em></span></h3>
-      <p class="d-body">Zlamovací jednoranná kulovnice s hřbetním napínáním bicího ústrojí s německým napínáčkem a otvírací boční deskou k náhledu na mechanismus. Možnost výběru výměnné hlavně v rážích .22&nbsp;HORNET, 6,5×52R, 9,3×72R, .30-30&nbsp;WINCHESTER, 410×76&nbsp;BROK a .25-20&nbsp;SINGLE&nbsp;SHOT.</p>
+      <p class="d-body">Zlamovací jednoranná kulovnice s hřbetním napínáním bicího ústrojí s německým napínáčkem a otvírací boční deskou k náhledu na mechanismus.</p>
+      <div class="cal-offer">
+        <span class="cal-offer-label">Možnost výběru výměnné hlavně — ráže</span>
+        <div class="cal-opts">
+          <span class="cal-opt">.22 HORNET</span>
+          <span class="cal-opt">6,5×52R</span>
+          <span class="cal-opt">9,3×72R</span>
+          <span class="cal-opt">.30-30 WINCHESTER</span>
+          <span class="cal-opt">410×76 BROK</span>
+          <span class="cal-opt">.25-20 SINGLE SHOT</span>
+        </div>
+      </div>
       <ul class="spec-list">
         <li><span class="sk">Délka hlavně</span><span class="sv">62 cm</span></li>
         <li><span class="sk">Délka celková</span><span class="sv">105,5 cm</span></li>
