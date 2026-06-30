@@ -6,7 +6,7 @@
   <title>LZ-CZ — Precision Since 1847</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&family=Josefin+Sans:ital,wght@0,100;0,300;0,400;0,600;0,700;1,100;1,300;1,400;1,600;1,700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&family=Jost:ital,wght@0,100;0,300;0,400;0,600;0,700;1,100;1,300;1,400;1,600;1,700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -76,7 +76,7 @@
       gap: 24px;
     }
     .loader-logo {
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-size: 1.3rem; font-weight: 600; letter-spacing: .6em; color: var(--gold);
       text-transform: uppercase; opacity: 0;
     }
@@ -90,7 +90,7 @@
       transition: width 1.8s cubic-bezier(.4,0,.2,1);
     }
     .loader-pct {
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-size: .5rem; font-weight: 300; letter-spacing: .5em; color: var(--metal);
       text-transform: uppercase;
     }
@@ -107,7 +107,7 @@
       pointer-events: none;
     }
     .nav-logo {
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-size: 1.1rem; font-weight: 600; letter-spacing: .5em;
       color: var(--goldp); text-transform: uppercase;
       position: relative; z-index: 1; text-decoration: none;
@@ -125,7 +125,7 @@
     }
     .nav-links { display: flex; gap: 44px; list-style: none; position: relative; z-index: 1; }
     .nav-links a {
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: 'Jost', sans-serif;
       color: var(--text); text-decoration: none;
       font-size: .62rem; font-weight: 300; letter-spacing: .25em;
       opacity: .75; transition: opacity .3s, color .3s;
@@ -171,7 +171,7 @@
       display: flex; flex-direction: column; align-items: center; gap: 20px;
     }
     .hero-eyebrow {
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-size: .62rem; font-weight: 400; letter-spacing: .65em; text-transform: uppercase;
       color: var(--gold); opacity: 0;
     }
@@ -187,13 +187,13 @@
     .hero-title em { font-style: italic; color: var(--goldp); font-weight: 600; letter-spacing: .1em; }
     .hero-divider { width: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
     .hero-sub {
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-size: .68rem; font-weight: 400; letter-spacing: .25em; text-transform: uppercase;
       color: rgba(200,191,180,.85); opacity: 0; max-width: 420px; line-height: 2.3;
       -webkit-font-smoothing: antialiased;
     }
     .hero-cta {
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: 'Jost', sans-serif;
       margin-top: 12px;
       display: inline-flex; align-items: center; gap: 18px;
       color: var(--goldp); text-decoration: none;
@@ -210,24 +210,24 @@
       display: flex; flex-direction: column; align-items: center; gap: 10px;
       opacity: 0; z-index: 10;
     }
-    .scroll-ind span { font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.4em; text-transform: uppercase; color: var(--metal); }
+    .scroll-ind span { font-family:'Jost',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.4em; text-transform: uppercase; color: var(--metal); }
     .scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, var(--gold), transparent); animation: sp 2s ease-in-out infinite; }
     @keyframes sp { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.25)} }
 
     /* ── MARQUEE ─────────────────────────────────────── */
     .mq { padding: 20px 0; background: var(--gold); overflow: hidden; position: relative; z-index: 10; }
     .mq-track { display: flex; animation: mq 22s linear infinite; white-space: nowrap; }
-    .mq-item { font-family:'Josefin Sans',sans-serif;font-size:.56rem;font-weight:400;letter-spacing:.45em;text-transform:uppercase; color: var(--bg); padding: 0 36px; display:flex;align-items:center;gap:36px; }
+    .mq-item { font-family:'Jost',sans-serif;font-size:.56rem;font-weight:400;letter-spacing:.45em;text-transform:uppercase; color: var(--bg); padding: 0 36px; display:flex;align-items:center;gap:36px; }
     .mq-item::after { content:'◆'; font-size:.38rem; }
     @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
     /* ── SECTION HELPERS ────────────────────────────── */
-    .s-label { font-family:'Josefin Sans',sans-serif;font-size:.56rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:16px; }
+    .s-label { font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:16px; }
     .s-label::before { content:'';width:28px;height:1px;background:var(--gold); }
     .s-head { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(2rem,3.8vw,3.2rem);font-weight:700;line-height:1.2;color:var(--white);letter-spacing:.04em;text-transform:uppercase; }
     .s-head em { font-style:oblique;color:var(--goldp);font-weight:700;letter-spacing:.04em; }
     .s-body { font-family:'Source Sans 3',sans-serif;font-size:.95rem;line-height:1.95;color:var(--text);opacity:.85;max-width:480px; }
-    .tlink { font-family:'Josefin Sans',sans-serif;display:inline-flex;align-items:center;gap:14px;color:var(--gold);text-decoration:none;font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;transition:gap .3s; }
+    .tlink { font-family:'Jost',sans-serif;display:inline-flex;align-items:center;gap:14px;color:var(--gold);text-decoration:none;font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;transition:gap .3s; }
     .tlink:hover { gap:22px; }
     .tlink .arr { width:28px;height:1px;background:var(--gold);position:relative; }
     .tlink .arr::after { content:'';position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid var(--gold);border-top:1px solid var(--gold);transform:rotate(45deg); }
@@ -261,7 +261,7 @@
     #collection { background: var(--bg2); }
     .coll-head { padding: 110px 60px 50px; display: flex; justify-content: space-between; align-items: flex-end; }
     .coll-title { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(2.2rem,4.5vw,4rem);font-weight:700;color:var(--white);letter-spacing:.04em;text-transform:uppercase; }
-    .coll-count { font-family:'Josefin Sans',sans-serif;font-size:.58rem;font-weight:300;letter-spacing:.32em;color:var(--metal);text-transform:uppercase; }
+    .coll-count { font-family:'Jost',sans-serif;font-size:.58rem;font-weight:300;letter-spacing:.32em;color:var(--metal);text-transform:uppercase; }
 
     .coll-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; padding-bottom: 110px; }
     .coll-item.tall { aspect-ratio: 16/10; }
@@ -284,10 +284,10 @@
       transition: opacity .4s;
     }
     .coll-item:hover .coll-item-ov { opacity: .7; }
-    .coll-n { position:absolute;top:28px;right:28px;font-family:'Josefin Sans',sans-serif;font-size:4rem;font-weight:300;color:rgba(201,164,110,.07);line-height:1;pointer-events:none; }
+    .coll-n { position:absolute;top:28px;right:28px;font-family:'Jost',sans-serif;font-size:4rem;font-weight:300;color:rgba(201,164,110,.07);line-height:1;pointer-events:none; }
     .coll-info { position:absolute;bottom:0;left:0;right:0;padding:36px;transform:translateY(6px);transition:transform .5s cubic-bezier(.25,.46,.45,.94); }
     .coll-item:hover .coll-info { transform:translateY(0); }
-    .ci-model { font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:6px; }
+    .ci-model { font-family:'Jost',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:6px; }
     .ci-name { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:1.05rem;font-weight:700;color:var(--white);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px; }
     .ci-desc { font-family:'Source Sans 3',sans-serif;font-size:.85rem;line-height:1.75;color:var(--text);opacity:0;transition:opacity .5s .1s;max-width:280px; }
     .coll-item:hover .ci-desc { opacity:.85; }
@@ -311,9 +311,9 @@
                   linear-gradient(to right, rgba(23,17,13,.4) 0%, transparent 40%);
     }
     .h-info { position:relative;z-index:5;padding:60px 80px;display:flex;flex-direction:column;gap:14px; }
-    .h-tag { font-family:'Josefin Sans',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:var(--gold); }
+    .h-tag { font-family:'Jost',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:var(--gold); }
     .h-title { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(2.2rem,4.5vw,4.5rem);font-weight:700;color:var(--white);letter-spacing:.03em;line-height:1.1;text-transform:uppercase; }
-    .h-sub { font-family:'Josefin Sans',sans-serif;font-size:.62rem;font-weight:300;letter-spacing:.22em;color:var(--metal);text-transform:uppercase;line-height:2; }
+    .h-sub { font-family:'Jost',sans-serif;font-size:.62rem;font-weight:300;letter-spacing:.22em;color:var(--metal);text-transform:uppercase;line-height:2; }
 
     .h-prog { position:absolute;bottom:44px;right:60px;display:flex;gap:10px;z-index:10; }
     .h-dot { width:28px;height:1px;background:rgba(201,164,110,.2);transition:background .4s,width .4s; }
@@ -338,28 +338,28 @@
     .d-text.dark { background:var(--bg2); }
     .d-text.darker { background:var(--bg3); }
 
-    .d-detail-label { font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:var(--metal);display:flex;align-items:center;gap:12px; }
+    .d-detail-label { font-family:'Jost',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:var(--metal);display:flex;align-items:center;gap:12px; }
     .d-detail-label::before { content:'';width:18px;height:1px;background:var(--metal); }
     .d-head { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:700;color:var(--white);line-height:1.25;letter-spacing:.03em;text-transform:uppercase; }
     .d-head em { font-style:oblique;color:var(--goldp);font-weight:700;letter-spacing:.03em; }
     .d-body { font-family:'Source Sans 3',sans-serif;font-size:.95rem;line-height:1.95;color:var(--text);opacity:.85;max-width:440px; }
 
     .spec-list { list-style:none;display:flex;flex-direction:column;gap:0; }
-    .spec-list li { display:flex;justify-content:space-between;align-items:center;font-family:'Josefin Sans',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.12em;padding:14px 0;border-bottom:1px solid rgba(201,164,110,.1); }
+    .spec-list li { display:flex;justify-content:space-between;align-items:center;font-family:'Jost',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.12em;padding:14px 0;border-bottom:1px solid rgba(201,164,110,.1); }
     .sk { color:var(--metal);text-transform:uppercase;letter-spacing:.28em; }
     .sv { color:var(--goldp);letter-spacing:.08em; }
 
     /* ── MODEL FEATURE BLOCKS (Optika / Dřevo) ───────── */
     .d-feature { display:flex;flex-direction:column;gap:10px;padding-top:6px; }
     .d-feature-label {
-      font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;
+      font-family:'Jost',sans-serif;font-size:.52rem;font-weight:300;
       letter-spacing:.45em;text-transform:uppercase;color:var(--gold);
       display:flex;align-items:center;gap:12px;
     }
     .d-feature-label::before { content:'';width:18px;height:1px;background:var(--gold); }
     .d-feature-text { font-family:'Source Sans 3',sans-serif;font-size:.92rem;line-height:1.9;color:var(--text);opacity:.85;max-width:440px; }
     .d-feature-spec {
-      font-family:'Josefin Sans',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.14em;
+      font-family:'Jost',sans-serif;font-size:.6rem;font-weight:300;letter-spacing:.14em;
       color:var(--goldp);margin-top:2px;
     }
     .d-feature-spec .sk { color:var(--metal);letter-spacing:.28em;margin-right:10px; }
@@ -376,7 +376,7 @@
     .m-shot:hover img { transform:scale(1.06); }
     .m-shot-cap {
       position:absolute;bottom:22px;left:22px;z-index:2;
-      font-family:'Josefin Sans',sans-serif;font-size:.5rem;font-weight:300;
+      font-family:'Jost',sans-serif;font-size:.5rem;font-weight:300;
       letter-spacing:.3em;text-transform:uppercase;color:var(--goldp);
       background:rgba(23,17,13,.55);padding:6px 12px;backdrop-filter:blur(2px);
     }
@@ -410,21 +410,22 @@
     /* Video banner */
     .prod-video-wrap { position:relative; margin:70px 0; height:62vh; min-height:380px; overflow:hidden; }
     .prod-video-wrap video { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.62) saturate(.9); }
+    .prod-video-wrap iframe { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100vw;height:56.25vw;min-height:62vh;min-width:110.22vh;border:0;pointer-events:none;filter:brightness(.62) saturate(.9); }
     .prod-video-grad { position:absolute;inset:0;background:linear-gradient(to top, rgba(23,17,13,.85) 0%, transparent 45%),linear-gradient(to right, rgba(23,17,13,.5) 0%, transparent 50%); }
     .prod-video-cap { position:absolute;bottom:40px;left:60px;z-index:2;display:flex;flex-direction:column;gap:8px; }
-    .prod-video-cap .pv-tag { font-family:'Josefin Sans',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.5em;text-transform:uppercase;color:var(--gold); }
+    .prod-video-cap .pv-tag { font-family:'Jost',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.5em;text-transform:uppercase;color:var(--gold); }
     .prod-video-cap .pv-txt { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(1.4rem,2.6vw,2.2rem);font-weight:700;font-style:oblique;color:var(--white);letter-spacing:.02em;text-transform:uppercase; }
 
     /* Two feature cards: ocel + DLC */
     .prod-grid { max-width:1200px;margin:0 auto;padding:0 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px; }
     .prod-card { display:flex;flex-direction:column;gap:16px;border-top:1px solid rgba(201,164,110,.18);padding-top:26px; }
-    .prod-card-label { font-family:'Josefin Sans',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.45em;text-transform:uppercase;color:var(--gold); }
+    .prod-card-label { font-family:'Jost',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.45em;text-transform:uppercase;color:var(--gold); }
     .prod-card-title { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:1.25rem;font-weight:700;color:var(--white);letter-spacing:.03em;text-transform:uppercase; }
     .prod-card p { font-family:'Source Sans 3',sans-serif;font-size:.92rem;line-height:1.9;color:var(--text);opacity:.85; }
 
     /* CNC list + zbrojiri columns */
     .prod-cols { max-width:1200px;margin:80px auto 0;padding:0 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start; }
-    .prod-col-label { font-family:'Josefin Sans',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:24px; }
+    .prod-col-label { font-family:'Jost',sans-serif;font-size:.56rem;font-weight:300;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:24px; }
     .prod-col-label::before { content:'';width:24px;height:1px;background:var(--gold); }
     .prod-list { list-style:none;display:flex;flex-direction:column;gap:0; }
     .prod-list li { font-family:'Source Sans 3',sans-serif;font-size:.95rem;color:var(--text);opacity:.88;padding:13px 0;border-bottom:1px solid rgba(201,164,110,.1);display:flex;align-items:center;gap:14px; }
@@ -445,8 +446,8 @@
     #stats { padding:0; display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bg2); }
     .stat { padding:70px 40px;background:var(--bg);display:flex;flex-direction:column;gap:14px;border-bottom:2px solid transparent;transition:border-color .4s; }
     .stat:hover { border-color:var(--gold); }
-    .stat-n { font-family:'Josefin Sans',sans-serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:300;color:var(--goldp);line-height:1; }
-    .stat-l { font-family:'Josefin Sans',sans-serif;font-size:.55rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--metal);line-height:1.9; }
+    .stat-n { font-family:'Jost',sans-serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:300;color:var(--goldp);line-height:1; }
+    .stat-l { font-family:'Jost',sans-serif;font-size:.55rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--metal);line-height:1.9; }
 
     /* ── TESTIMONIAL ─────────────────────────────────── */
     #testimonial { min-height:60vh;display:flex;align-items:center;justify-content:center;padding:120px 60px;position:relative;overflow:hidden; }
@@ -454,9 +455,9 @@
     .t-bg img { width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.25) saturate(.5);transform:scale(1.05); }
     .t-bg-grad { position:absolute;inset:0;background:rgba(23,17,13,.55); }
     .t-content { position:relative;z-index:2;max-width:820px;text-align:center;display:flex;flex-direction:column;gap:34px;align-items:center; }
-    .t-q { font-family:'Josefin Sans',sans-serif;font-size:5rem;color:var(--gold);opacity:.3;line-height:.55;font-weight:300; }
+    .t-q { font-family:'Jost',sans-serif;font-size:5rem;color:var(--gold);opacity:.3;line-height:.55;font-weight:300; }
     .t-text { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(1.2rem,2.5vw,1.9rem);font-weight:700;font-style:oblique;color:var(--white);line-height:1.7;letter-spacing:.02em; }
-    .t-author { font-family:'Josefin Sans',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:18px; }
+    .t-author { font-family:'Jost',sans-serif;font-size:.54rem;font-weight:300;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:18px; }
     .t-author::before,.t-author::after { content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold)); }
     .t-author::after { transform:scaleX(-1); }
 
@@ -485,18 +486,18 @@
     .c-head em { font-style:oblique;color:var(--goldp);font-weight:700;letter-spacing:.03em; }
     .c-info { display:flex;flex-direction:column;gap:20px; }
     .c-info-row { display:flex;gap:20px;align-items:flex-start; }
-    .c-info-label { font-family:'Josefin Sans',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);min-width:80px;margin-top:2px; }
+    .c-info-label { font-family:'Jost',sans-serif;font-size:.52rem;font-weight:300;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);min-width:80px;margin-top:2px; }
     .c-info-val { font-family:'Source Sans 3',sans-serif;font-size:.9rem;color:var(--text);line-height:1.75; }
 
     .c-form { display:flex;flex-direction:column;gap:22px; }
     .fg { position:relative; }
-    .fi,.ft { width:100%;background:transparent;border:none;border-bottom:1px solid rgba(201,164,110,.2);color:var(--white);font-family:'Josefin Sans',sans-serif;font-size:.68rem;font-weight:300;letter-spacing:.15em;padding:14px 0;outline:none;transition:border-color .3s; }
+    .fi,.ft { width:100%;background:transparent;border:none;border-bottom:1px solid rgba(201,164,110,.2);color:var(--white);font-family:'Jost',sans-serif;font-size:.68rem;font-weight:300;letter-spacing:.15em;padding:14px 0;outline:none;transition:border-color .3s; }
     .fi:focus,.ft:focus { border-color:var(--gold); }
     .fi::placeholder,.ft::placeholder { color:var(--metal);font-size:.6rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase; }
     .ft { resize:none;height:100px; }
     .fl { position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .4s; }
     .fi:focus~.fl,.ft:focus~.fl { width:100%; }
-    .sbtn { align-self:flex-start;margin-top:16px;background:transparent;border:1px solid var(--gold);color:var(--goldp);font-family:'Josefin Sans',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.4em;text-transform:uppercase;padding:16px 44px;cursor:none;position:relative;overflow:hidden;transition:color .4s; }
+    .sbtn { align-self:flex-start;margin-top:16px;background:transparent;border:1px solid var(--gold);color:var(--goldp);font-family:'Jost',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.4em;text-transform:uppercase;padding:16px 44px;cursor:none;position:relative;overflow:hidden;transition:color .4s; }
     .sbtn::before { content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-101%);transition:transform .4s cubic-bezier(.25,.46,.45,.94); }
     .sbtn:hover::before { transform:translateX(0); }
     .sbtn:hover { color:var(--bg); }
@@ -506,10 +507,10 @@
     footer .f-video { position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:brightness(.12) saturate(.4); }
     footer .f-overlay { position:absolute;inset:0;z-index:1;background:rgba(23,17,13,.7); }
     footer .f-logo, footer .f-links, footer .f-copy { position:relative;z-index:2; }
-    .f-logo { font-family:'Josefin Sans',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.55em;color:var(--gold);text-transform:uppercase; }
-    .f-copy { font-family:'Josefin Sans',sans-serif;font-size:.48rem;font-weight:300;letter-spacing:.2em;color:var(--metal);text-transform:uppercase; }
+    .f-logo { font-family:'Jost',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.55em;color:var(--gold);text-transform:uppercase; }
+    .f-copy { font-family:'Jost',sans-serif;font-size:.48rem;font-weight:300;letter-spacing:.2em;color:var(--metal);text-transform:uppercase; }
     .f-links { display:flex;gap:28px; }
-    .f-links a { font-family:'Josefin Sans',sans-serif;color:var(--metal);text-decoration:none;font-size:.5rem;font-weight:300;letter-spacing:.25em;text-transform:uppercase;transition:color .3s; }
+    .f-links a { font-family:'Jost',sans-serif;color:var(--metal);text-decoration:none;font-size:.5rem;font-weight:300;letter-spacing:.25em;text-transform:uppercase;transition:color .3s; }
     .f-links a:hover { color:var(--gold); }
 
     /* ── REVEAL HELPERS ──────────────────────────────── */
@@ -557,7 +558,7 @@
     #philosophy .s-body, .d-body, .d-feature-text{ max-width: 480px; }
 
     /* značka na začátku sekce O nás */
-    .phil-brand{ font-family:'Josefin Sans',sans-serif; font-size:1.4rem; font-weight:600; letter-spacing:.5em; text-transform:uppercase; color:var(--goldp); }
+    .phil-brand{ font-family:'Jost',sans-serif; font-size:1.4rem; font-weight:600; letter-spacing:.5em; text-transform:uppercase; color:var(--goldp); }
 
     /* ── PHILOSOPHY (tmavá oliva) ────────────────────── */
     #philosophy .phil-text{ background: var(--olv-bg) !important; }
@@ -607,10 +608,10 @@
 
     /* ── VÝMĚNNÁ HLAVEŇ — nabídka ráží (vypadá jako výběr) ── */
     .cal-offer{ display:flex; flex-direction:column; gap:16px; }
-    .cal-offer-label{ font-family:'Josefin Sans',sans-serif; font-size:.52rem; font-weight:700; letter-spacing:.4em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:12px; }
+    .cal-offer-label{ font-family:'Jost',sans-serif; font-size:.52rem; font-weight:700; letter-spacing:.4em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:12px; }
     .cal-offer-label::before{ content:''; width:18px; height:1px; background:var(--gold); }
     .cal-opts{ display:flex; flex-wrap:wrap; gap:10px; }
-    .cal-opt{ font-family:'Josefin Sans',sans-serif; font-size:.6rem; font-weight:400; letter-spacing:.1em; color:var(--olv-tx); border:1px solid rgba(181,158,125,.38); padding:11px 16px; background:rgba(255,255,255,.03); transition:border-color .35s, color .35s, background .35s; }
+    .cal-opt{ font-family:'Jost',sans-serif; font-size:.6rem; font-weight:400; letter-spacing:.1em; color:var(--olv-tx); border:1px solid rgba(181,158,125,.38); padding:11px 16px; background:rgba(255,255,255,.03); transition:border-color .35s, color .35s, background .35s; }
     .cal-opt:hover{ border-color:var(--goldp); color:var(--goldp); background:rgba(181,158,125,.12); }
 
   </style>
@@ -871,10 +872,10 @@
   </div>
 
   <div class="prod-video-wrap" data-par>
-    <video src="assets/footer-bg.mp4" autoplay muted loop playsinline></video>
+    <iframe src="https://www.youtube.com/embed/5aoLkc_QpBM?si=qrUgHqnmnEWi_W4m&autoplay=1&mute=1&loop=1&playlist=5aoLkc_QpBM&controls=0&rel=0&modestbranding=1&playsinline=1&disablekb=1" title="Z naší dílny" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     <div class="prod-video-grad"></div>
     <div class="prod-video-cap">
-      <span class="pv-tag">Z naší dílny · video se doplní</span>
+      <span class="pv-tag">Z naší dílny</span>
       <span class="pv-txt">Řemeslo v pohybu</span>
     </div>
   </div>
